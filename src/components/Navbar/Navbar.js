@@ -8,6 +8,8 @@ import Logo from '../../Images/icon.png';
 /* ICONS */ 
 import { AiFillHome } from 'react-icons/ai';
 import { AiFillMessage } from 'react-icons/ai';
+import { AiFillCaretDown } from 'react-icons/ai';
+import { AiTwotoneBell } from 'react-icons/ai';
 
 /* CSS */ 
 import './Navbar.css';
@@ -28,10 +30,10 @@ const Navbar = () => {
                     <AiFillMessage className='iconSettings'/>
                 </div>
                 <div className='containerIconSettings'>
-                    <AiFillMessage className='iconSettings'/>
+                    <AiTwotoneBell className='iconSettings'/>
                 </div>
                 <div className='containerIconSettings'>
-                    <AiFillMessage className='iconSettings'/>
+                    <AiFillCaretDown className='iconSettings'/>
                 </div>               
             </div>
 
