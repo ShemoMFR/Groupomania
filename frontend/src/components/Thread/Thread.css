@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 33%;
+    width: 40%;
 }
 
 .containerThread{
@@ -22,6 +22,7 @@
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
+    border-bottom: 1px solid gray;
 }
 
 .containerPseudo {
@@ -36,4 +37,10 @@
     font-size: 1.2em;
     text-align: left;
     word-wrap: break-word;
+}
+
+.pseudoThread{
+    font-weight: 700;
+    font-size: 1.4em;
+    color: orangered;
 }

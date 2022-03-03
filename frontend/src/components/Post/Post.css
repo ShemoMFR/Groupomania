@@ -1,7 +1,7 @@
 
 .containerCenter {
     display: flex;
-    width: 33%;
+    width: 40%;
     height: 70px;
     box-shadow: 0 5px 20px rgba(141, 141, 141, 0.69);
     border-radius: 20px;
@@ -27,4 +27,13 @@
     border: white;
     background-color: rgb(233, 231, 231);
     padding: 15px;
+}
+
+.buttonPost{
+    width: 70px;
+    margin-left: 5px;
+    border-radius: 20px;
+    border: white;
+    background-color: orangered;
+    color: white
 }
