@@ -12,7 +12,7 @@ exports.create = (data, callback) => {
             if (error) { 
                 return callback(error)
             }
-            return callback(null, results)
+            return callback(null, results, data.password)
         }
     )
 }

@@ -1,29 +1,52 @@
 /* LIBRAIRIES */ 
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 /* CSS */
 import './Inscription.css'
 
 function Inscription(props) {
 
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmation, setConfirmation] = useState('')
-    const [createAccount, setCreateAccount] = useState({})
+    let navigate = useNavigate();
+
+    const [pseudo, setPseudo] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmation, setConfirmation] = useState('');
 
     function handleSubmit(e) {
         e.preventDefault();
-        setCreateAccount({firstName: firstName, lastName: lastName, email: email, password: password, confirmation: confirmation});
-        setFirstName('')
-        setLastName('')
-        setEmail('')
-        setPassword('')
-        setConfirmation('')
-        props.setIsModalOpen(false)
+        setPseudo('');
+        setEmail('');
+        setPassword('');
+        setConfirmation('');
+        props.setIsModalOpen(false); 
+
+        if (password === confirmation) {
+
+            let credentials = {
+                pseudo, email, password
+            }
+
+            fetch("http://localhost:3000/api/users/createUser", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*', 
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(credentials),
+            })
+            .then(response => response.json())
+            .then(data => {
+                localStorage.setItem("token", data.token);
+                navigate('/accueil');
+            })
+            .catch(error =>console.log(error))
+
+        } else {
+            console.log("password and confirmation are different")
+        }
     }
-    console.log(createAccount);
 
   return (
     <div className='container_modal'>
@@ -35,13 +58,12 @@ function Inscription(props) {
                     <div className='exit' onClick={() => props.setIsModalOpen(false)}>X</div>
                 </div>
                 <div className='container_inputs'>
-                    <input className='input_inscription' placeholder='Prénom' type="text" onChange={(e) => setFirstName(e.target.value)}/>
-                    <input className='input_inscription' placeholder='Nom' type="text" onChange={(e) => setLastName(e.target.value)}/>
+                    <input className='pseudo_inscription' placeholder='Pseudo' type="text" onChange={(e) => setPseudo(e.target.value)}/>
                 </div>
                 <input className='email_inscription' type='email' placeholder='Email' onChange={(e) => setEmail(e.target.value)}/>
                 <div className='container_inputs'>
-                    <input className='input_inscription' placeholder='Mot de passe' type="text" onChange={(e) => setPassword(e.target.value)}/>
-                    <input className='input_inscription' placeholder='Confirmation' type="text" onChange={(e) => setConfirmation(e.target.value)}/>
+                    <input className='input_inscription' placeholder='Mot de passe' type="password" onChange={(e) => setPassword(e.target.value)}/>
+                    <input className='input_inscription' placeholder='Confirmation' type="password" onChange={(e) => setConfirmation(e.target.value)}/>
                 </div>
                 <button className='btn_inscription'>S'INSCRIRE</button>
             </div>

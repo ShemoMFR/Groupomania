@@ -6,7 +6,7 @@ exports.createUser = (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     body.password = bcrypt.hashSync(body.password, salt);
 
-    create(body, (error, results) => {
+    create(body, (error, results, token) => {
         if(error) {
             console.log(error);
             return res.status(500).json({
@@ -16,7 +16,8 @@ exports.createUser = (req, res) => {
         }
         return res.status(200).json({
             success: 1,
-            data: results
+            data: results,
+            token: token
         })
     })
 }
