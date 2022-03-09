@@ -2,9 +2,6 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-/* PAGES */ 
-import Home from '../../pages/Home/Home';
-
 const PrivateRoute = () => {
 
     const auth = localStorage.getItem("token") // determine if authorized, from context or however you're doing it

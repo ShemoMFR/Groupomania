@@ -1,5 +1,7 @@
-const { create, getUsers, getUserById, updateUser, deleteUser } = require('./service');
+const { create, getUsers, getUserById, updateUser, deleteUser, authentification } = require('./service');
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+const { compareSync } = require('bcrypt');
 
 exports.createUser = (req, res) => {
     const body = req.body;
@@ -19,6 +21,43 @@ exports.createUser = (req, res) => {
             data: results,
             token: token
         })
+    })
+}
+
+exports.authenticateUser = (req, res) => {
+
+    const body = req.body;
+
+    authentification(body.email, (error, results) => {
+
+        if (error) {
+            console.log(error);
+        }
+
+        if (!results) {
+            return res.json({
+                success: 0,
+                data: 'Invalid email or password'
+            })
+        }
+
+        const result = compareSync(body.password, results.password);
+
+        if (result) {
+            results.password = undefined;
+            const token = jwt.sign({ result: results}, 'secretkey', { expiresIn: '1h' });
+            return res.json({
+                success: 1,
+                message: 'Login successfully',
+                token: token
+            })
+        } else {
+            return res.json({
+                success: 0,
+                data: 'Invalid email or password'
+            })
+        }
+
     })
 }
 

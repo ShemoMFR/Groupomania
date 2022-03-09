@@ -17,6 +17,19 @@ exports.create = (data, callback) => {
     )
 }
 
+exports.authentification = (email, callback) => {
+
+   pool.query(`SELECT * FROM utilisateurs WHERE email = ?`,
+    [email],
+    (error, results, fields) => {
+        if (error) {
+            return callback(error)
+        }
+        return callback(null, results[0])
+    }
+   )
+}
+
 exports.getUsers = (callback) => {
     pool.query(`SELECT id, pseudo, email FROM utilisateurs`,
     [], (error, results, fields) => {
