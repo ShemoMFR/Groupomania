@@ -8,24 +8,26 @@ exports.createUser = (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     body.password = bcrypt.hashSync(body.password, salt);
 
-    create(body, (error, results, token) => {
+    create(body, (error, results) => {
         if(error) {
             console.log(error);
             return res.status(500).json({
                 success: 0,
                 message: "Database connexion error"
             })
+        } else {
+            const token = jwt.sign({ result: results}, 'secretkey', { expiresIn: '1h' });
+
+            return res.status(200).json({
+                success: 1,
+                data: results,
+                token: token
+            })
         }
-        return res.status(200).json({
-            success: 1,
-            data: results,
-            token: token
-        })
     })
 }
 
 exports.authenticateUser = (req, res) => {
-
     const body = req.body;
 
     authentification(body.email, (error, results) => {
