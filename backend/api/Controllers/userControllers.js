@@ -1,4 +1,4 @@
-const { create, getUsers, getUserById, updateUser, deleteUser, authentification } = require('./service');
+const { create, getUsers, getUserById, updateUser, deleteUser, authentification } = require('../Services/userService');
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 

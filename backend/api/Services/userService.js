@@ -1,4 +1,4 @@
-const pool = require('../config/database');
+const pool = require('../../config/database');
 
 exports.create = (data, callback) => {
     pool.query(`INSERT INTO utilisateurs(pseudo, email, password)

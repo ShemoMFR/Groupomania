@@ -2,7 +2,8 @@
 require('dotenv').config();
 const express = require('express'); //importe le serveur express
 const app = express(); // créer l'application express
-const userRouter = require("./api/routes");
+const userRouter = require("./api/Routes/userRoutes");
+const postRouter = require("./api/Routes/postRoutes");
 /* const path = require('path');/* Permet de créer une route vers notre dossier images */
 /* const { endianness } = require('os'); */
 
@@ -18,5 +19,5 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/users", userRouter);
-
+app.use("/api/posts", postRouter);
 module.exports = app;
