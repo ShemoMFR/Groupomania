@@ -1,5 +1,6 @@
 /* LIBRAIRIES */ 
-import React, {useState} from 'react'
+import React, {useState} from 'react';
+import { useQuery } from 'react-query';
 
 /* COMPONENTS */
 import Post from '../Post/Post';
@@ -10,7 +11,16 @@ import './Forum.css'
 
 function Forum() {
 
-    const [posts, setPosts] = useState([]);//tab/publication. récupère les infos de Post pour les envoyer à thread
+    const { isLoading, err, data} = useQuery('postsData', () => fetch('http://localhost:3000/api/posts', { 
+        method: 'get', 
+        headers: new Headers({
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }),
+    }).then( res => res.json()));
+
+    console.log(data)
+
+    const [posts, setPosts] = useState([]); //tab/publication. récupère les infos de Post pour les envoyer à thread
     const [error, setError] = useState('');
 
     return (
