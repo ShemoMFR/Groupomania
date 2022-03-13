@@ -1,7 +1,6 @@
 const { create, getUsers, getUserById, updateUser, deleteUser, authentification } = require('./service');
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
-const { compareSync } = require('bcrypt');
 
 exports.createUser = (req, res) => {
     const body = req.body;
@@ -43,7 +42,7 @@ exports.authenticateUser = (req, res) => {
             })
         }
 
-        const result = compareSync(body.password, results.password);
+        const result = bcrypt.compareSync(body.password, results.password);
 
         if (result) {
             results.password = undefined;

@@ -13,39 +13,56 @@ function Inscription(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmation, setConfirmation] = useState('');
+    const [errorEmail, setErrorEmail] = useState('');
+    const [errorPassword, setErrorPassword] = useState('');
+    const [errorConfirmation, setErrorConfirmation ] = useState('')
+
 
     function handleSubmit(e) {
         e.preventDefault();
-        setPseudo('');
-        setEmail('');
-        setPassword('');
-        setConfirmation('');
-        props.setIsModalOpen(false); 
 
-        if (password === confirmation) {
+        const regexEmail = /^([a-z0-9.\-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+        const regexPassword = /^[^\s][a-zA-ZÀ-ÖØ-öø-ÿ\s-]+[^\s]$/;
 
-            let credentials = {
-                pseudo, email, password
-            }
+        if (!regexEmail.test(email)) {
+            setErrorEmail("L'email n'est pas valide");
+            } else {
+                console.log(email, password, confirmation);
+                setErrorEmail('');
+                if (!regexPassword.test(password)) {
+                    setErrorPassword("Le mot de passe n'est pas valide");
+                } else {
+                    if (password === confirmation) {
 
-            fetch("http://localhost:3000/api/users/createUser", {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*', 
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(credentials),
-            })
-            .then(response => response.json())
-            .then(data => {
-                localStorage.setItem("token", data.token);
-                navigate('/accueil');
-            })
-            .catch(error =>console.log(error))
-
-        } else {
-            console.log("password and confirmation are different")
-        }
+                        let credentials = {
+                            pseudo, email, password
+                        } 
+            
+                        fetch("http://localhost:3000/api/users/createUser", {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json, text/plain, */*', 
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(credentials),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            setPseudo('');
+                            setEmail('');
+                            setPassword('');
+                            setConfirmation('');
+                            props.setIsModalOpen(false);
+                            localStorage.setItem("token", data.token);
+                            navigate('/accueil');
+                        })
+                        .catch(error =>console.log(error))
+            
+                    } else {
+                        setErrorConfirmation("password and confirmation are different")
+                    } 
+                }
+            }  
     }
 
   return (
@@ -60,12 +77,23 @@ function Inscription(props) {
                 <div className='container_inputs'>
                     <input className='pseudo_inscription' placeholder='Pseudo' type="text" onChange={(e) => setPseudo(e.target.value)}/>
                 </div>
+                
                 <input className='email_inscription' type='email' placeholder='Email' onChange={(e) => setEmail(e.target.value)}/>
+                {
+                    errorEmail && <div style={{color: 'red'}}>{errorEmail}</div>
+                }
                 <div className='container_inputs'>
                     <input className='input_inscription' placeholder='Mot de passe' type="password" onChange={(e) => setPassword(e.target.value)}/>
                     <input className='input_inscription' placeholder='Confirmation' type="password" onChange={(e) => setConfirmation(e.target.value)}/>
                 </div>
+                {
+                    errorPassword.length > 0 && <div style={{color: 'red'}}>{errorPassword}</div>
+                }
+                {
+                    errorConfirmation && <div style={{color: 'red'}}>{errorConfirmation}</div>
+                }
                 <button className='btn_inscription'>S'INSCRIRE</button>
+                
             </div>
        </form>
     </div>
