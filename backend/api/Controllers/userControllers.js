@@ -50,7 +50,9 @@ exports.authenticateUser = (req, res) => {
             return res.json({
                 success: 1,
                 message: 'Login successfully',
-                token: token
+                token: token,
+                id: results.id,
+                pseudo: results.pseudo
             })
         } else {
             return res.json({

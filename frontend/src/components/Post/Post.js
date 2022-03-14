@@ -15,8 +15,27 @@ function Post(props) {
     function handleClick() {
 
         if (addMessage.length < 200) { 
+
+            let user = JSON.parse(localStorage.getItem("user"));
+
+            fetch('http://localhost:3000/api/posts/createPost', { 
+                method: 'POST', 
+                headers: new Headers({
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Accept': 'application/json, text/plain, */*', 
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify({
+                    date: new Date().toDateString(),
+                    message: addMessage,
+                    id: user[0],
+                    pseudo: user[1]
+                })})
+                .then( res => res.json())
+                .then( data => console.log(data))
+                .catch( err => console.log(err))
+
             props.setError('');
-            props.setPosts([...props.posts, {message: addMessage, pseudo: "franz", date: new Date().toDateString(), time: Date.now()}])/*on récupère le Tab créer dans Forum pour y ajouter un objet/publication*/
             setAddMessage('');
         }
         else {

@@ -19,7 +19,7 @@ exports.createPost = (data, callback) => {
 }
 
 exports.getPosts = (callback) => {
-    pool.query(`SELECT idUser, pseudo, date, message FROM posts`,
+    pool.query(`SELECT idUser, pseudo, date, message, ID FROM posts`,
     [], (error, results, fields) => {
         if (error) {
             return callback(error);

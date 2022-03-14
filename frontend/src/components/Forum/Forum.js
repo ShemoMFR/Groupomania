@@ -16,9 +16,7 @@ function Forum() {
         headers: new Headers({
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         }),
-    }).then( res => res.json()));
-
-    console.log(data)
+        }).then( res => res.json()));
 
     const [posts, setPosts] = useState([]); //tab/publication. récupère les infos de Post pour les envoyer à thread
     const [error, setError] = useState('');
@@ -32,7 +30,7 @@ function Forum() {
                 <div style={{marginTop: "20px", color: "red", fontSize: "1.3rem"}}>{error}</div> 
                 
             }
-            <Thread posts={posts}/>
+            { data && <Thread posts={data}/> }
 
         </div> 
     )    
