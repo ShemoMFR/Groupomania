@@ -18,6 +18,19 @@ exports.createPost = (data, callback) => {
     )
 }
 
+exports.getLikes = (data, callback) => {
+    pool.query(`SELECT * FROM posts JOIN likes ON posts.ID = likes.postId WHERE likes.postId = ?`,
+        [data], 
+        (error, results, fields) => {
+            if (error) {
+                return callback(error)
+            };
+            
+            return callback(null, results)
+        }
+    )
+}
+
 exports.getPosts = (callback) => {
     pool.query(`SELECT idUser, pseudo, date, message, ID FROM posts`,
     [], (error, results, fields) => {

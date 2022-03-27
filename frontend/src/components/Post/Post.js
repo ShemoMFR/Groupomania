@@ -14,7 +14,7 @@ function Post(props) {
     
     function handleClick() {
 
-        if (addMessage.length < 200) { 
+        if (addMessage.length < 250) { 
 
             let user = JSON.parse(localStorage.getItem("user"));
 

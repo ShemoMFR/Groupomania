@@ -11,7 +11,7 @@ import './Forum.css'
 
 function Forum() {
 
-    const { isLoading, err, data} = useQuery('postsData', () => fetch('http://localhost:3000/api/posts', { 
+    const {isLoading, err, data} = useQuery('postsData', () => fetch('http://localhost:3000/api/posts', { 
         method: 'get', 
         headers: new Headers({
             'Authorization': `Bearer ${localStorage.getItem('token')}`

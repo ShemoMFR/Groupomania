@@ -18,6 +18,7 @@ import './App.css';
 function App() {
 
     const [queryClient] = useState(() => new QueryClient());
+    
     return (
         <div className="App">
             <BrowserRouter>
