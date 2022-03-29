@@ -16,9 +16,9 @@ function Forum() {
         headers: new Headers({
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         }),
-        }).then( res => res.json()));
+        }).then( res => res.json())); 
 
-    const [posts, setPosts] = useState([]); //tab/publication. récupère les infos de Post pour les envoyer à thread
+    const [posts, setPosts] = useState([]); // Récupère les infos de Post pour les envoyer à thread
     const [error, setError] = useState('');
 
     return (

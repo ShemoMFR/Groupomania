@@ -46,6 +46,10 @@
     color: orangered;
 }
 
+.jaimeThread, .commentairesThread {
+    cursor: pointer;
+}
+
 .containerLikesComments {
     position: absolute;
     bottom: 0;
