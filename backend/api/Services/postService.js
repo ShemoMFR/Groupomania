@@ -19,7 +19,7 @@ exports.createPost = (data, callback) => {
 }
 
 exports.getLikes = (data, callback) => {
-    pool.query(`SELECT * FROM posts JOIN likes ON posts.ID = likes.postId WHERE likes.postId = ?`,
+    pool.query(`SELECT postId FROM likes WHERE userId = ?`,
         [data], 
         (error, results, fields) => {
             if (error) {
@@ -33,7 +33,7 @@ exports.getLikes = (data, callback) => {
 
 exports.isLiked = (data, callback) => {
     pool.query(`SELECT * FROM likes WHERE postId = ? AND userId = ?`,
-    [data.postId, data.userId],
+    [data.postId, data.uuid],
         (error, results, fields) => {
             if (error) {
                 return callback(error)

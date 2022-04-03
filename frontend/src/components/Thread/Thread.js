@@ -1,5 +1,5 @@
 /* LIBRAIRIES */ 
-import React, {useEffect, useState} from 'react'
+import React, { useState } from 'react'
 
 /* CSS */
 import './Thread.css'
@@ -9,6 +9,28 @@ import { MdAccountCircle } from 'react-icons/md';
 import { AiOutlineLike } from 'react-icons/ai';
 
 function Thread(props) {
+
+    function checkIfLikedPost(userId) {
+
+        /* props.postsLiked.data.forEach(objet => {
+
+            if (userId == objet.postId) {
+
+                console.log('test')
+                return true;
+            } 
+        }) */
+
+        for (let i = 0; i < props.postsLiked.data.length; i++) {
+            if (userId == props.postsLiked.data[i].postId) {
+
+                console.log('test')
+                return true;
+            } 
+        }
+
+        return false;
+    }
 
     const userId = JSON.parse(localStorage.getItem('user'));
 
@@ -23,7 +45,6 @@ function Thread(props) {
     function handleClickLike(likes, postId, uuid) {
 
         props.setIsUpdated(!props.isUpdated);
-
         const like = likes + 1;
 
         fetch('http://localhost:3000/api/posts/addLike', {
@@ -55,7 +76,12 @@ function Thread(props) {
                         </div>
                         <p className='threadMessage'>{post.message}</p>
                         <div className='containerLikesComments'>
-                            <div className='jaimeThread' onClick={() => handleClickLike(post.likes, post.ID, userId[0])}>{post.likes} <AiOutlineLike /> J'aime</div>
+                            {
+                                checkIfLikedPost(post.ID) ?
+                                <div className='jaimeThread' onClick={() => handleClickLike(post.likes, post.ID, userId[0])}>{post.likes} <AiOutlineLike style={{color: "blue"}} /> J'aime</div>
+                                :
+                                <div className='jaimeThread' onClick={() => handleClickLike(post.likes, post.ID, userId[0])}>{post.likes} <AiOutlineLike /> J'aime</div>
+                            }
                             <div className='commentairesThread'>Commentaires</div>
                         </div>
                     </div>

@@ -12,28 +12,58 @@ function Forum() {
 
     const [posts, setPosts] = useState([]); // Récupère les infos de Post pour les envoyer à thread
     const [datas, setDatas] = useState([]);
+    const [postsLiked, setPostsLiked] = useState([]);
     const [error, setError] = useState('');
     const [isUpdated, setIsUpdated] = useState(false);
 
     useEffect(() => {
 
+        const userId = JSON.parse(localStorage.getItem('user'));
+
+        fetch('http://localhost:3000/api/posts/getLikes', {
+                method: 'POST',
+                headers: new Headers({
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify({
+                    userId: userId[0]
+                })
+            })
+            .then(res => res.json())
+            .then(data => setPostsLiked(data))
+            .catch(err => console.log(err))
+
         fetch('http://localhost:3000/api/posts', {
-            method: 'get', 
+            method: 'GET', 
             headers: new Headers({
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-        })
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            })           
         })
         .then(res => res.json())
         .then(data => setDatas(data))
         .catch(err => setError(err))
-    }, [isUpdated])
-    
-    /* const {isLoading, err, data} = useQuery('postsData', () => fetch('http://localhost:3000/api/posts', { 
-        method: 'get', 
-        headers: new Headers({
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }),
-        }).then( res => res.json()));  */    
+
+    }, [isUpdated])  
+
+    /* useEffect(() => {
+
+        const userId = JSON.parse(localStorage.getItem('user'));
+
+        fetch('http://localhost:3000/api/posts/getLikes', {
+                method: 'POST',
+                headers: new Headers({
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify({
+                    userId: userId[0]
+                })
+            })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
+    }, [isUpdated])  */
 
     return (
         <div className='containerForum'> 
@@ -44,7 +74,7 @@ function Forum() {
                 <div style={{marginTop: "20px", color: "red", fontSize: "1.3rem"}}>{error}</div> 
                 
             }
-            { datas && <Thread posts={datas} isUpdated={isUpdated} setIsUpdated={setIsUpdated}/> }
+            { datas && postsLiked && <Thread posts={datas} postsLiked={postsLiked} isUpdated={isUpdated} setIsUpdated={setIsUpdated}/> }
 
         </div> 
     )    

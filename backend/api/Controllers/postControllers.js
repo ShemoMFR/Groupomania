@@ -21,6 +21,29 @@ exports.createPost = (req, res) => {
     })
 }
 
+/* exports.isLiked = (req, res) => {
+
+    const body = req.body;
+
+    isLiked(body, (error, results) => {
+
+        if (error) {
+            console.log(error);
+            return;
+        }
+        if (!results) {
+            return res.status(404).json({
+                success: 1,
+                message: "User already Liked",
+            })
+        } else {
+            return res.status(200).json({
+                success: 0
+            })
+        }
+    })
+} */
+
 exports.addLike = (req, res) => {
     const body = req.body;
 
@@ -92,9 +115,10 @@ exports.getPosts = (req, res) => {
 }
 
 exports.getLikes = (req, res) => {
-    const postId = req.body.postId;
+    const userId = req.body.userId;
     
-    getLikes(postId, (error, results) => {
+    getLikes(userId, (error, results) => {
+
         if (error) {
             console.log(error);
             return;
