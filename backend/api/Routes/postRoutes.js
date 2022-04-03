@@ -6,7 +6,7 @@ const { checkToken } = require('../../config/tokenAuth');
 /* ROUTER POST */ 
 router.post('/createPost', checkToken, createPost);
 router.post('/getLikes', checkToken, getLikes);
-router.post('/addLike', checkToken, addLike);
+router.put('/addLike', checkToken, addLike);
 /* router.get('/getLikesNbr', checkToken, getLikesNbr); */
 router.get('/', checkToken, getPosts);
 

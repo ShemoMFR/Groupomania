@@ -10,6 +10,8 @@ import { AiOutlineLike } from 'react-icons/ai';
 
 function Thread(props) {
 
+    const userId = JSON.parse(localStorage.getItem('user'));
+
     props.posts.data && props.posts.data.sort(function compare(a, b) {
         if (a.ID > b.ID)
             return -1;
@@ -17,6 +19,24 @@ function Thread(props) {
             return 1;
         return 0;
     });    
+
+    function handleClickLike(likes, postId, uuid) {
+
+        const like = likes + 1;
+
+        fetch('http://localhost:3000/api/posts/addLike', {
+            method: 'PUT',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }),
+            body: JSON.stringify({
+                likes: like,
+                postId: postId,
+                uuid: uuid
+            })
+        })
+    }
     
     return (
         <div className='container'>
@@ -33,7 +53,7 @@ function Thread(props) {
                         </div>
                         <p className='threadMessage'>{post.message}</p>
                         <div className='containerLikesComments'>
-                            <div className='jaimeThread'>{post.likes} <AiOutlineLike /> J'aime</div>
+                            <div className='jaimeThread' onClick={() => handleClickLike(post.likes, post.ID, userId[0])}>{post.likes} <AiOutlineLike /> J'aime</div>
                             <div className='commentairesThread'>Commentaires</div>
                         </div>
                     </div>

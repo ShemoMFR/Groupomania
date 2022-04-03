@@ -1,4 +1,4 @@
-const { createPost, getPosts, getLikes, isLiked } = require('../Services/postService');
+const { createPost, getPosts, getLikes, isLiked, addLike } = require('../Services/postService');
 
 exports.createPost = (req, res) => {
     const body = req.body;
@@ -21,31 +21,6 @@ exports.createPost = (req, res) => {
     })
 }
 
-/* exports.getLikesNbr = (req, res) => {
-
-    const postId = req.body.postId;
-
-    getLikeNbr(postId, (error, results) => {
-        if (error) {
-            console.log(error);
-            return;
-        }
-        if (results === undefined) {
-            return res.status(404).json({
-                success: 0,
-                message: "No post found"
-            })
-        }
-        else {
-            return res.status(200).json({
-                success: 1,
-                message: 'Number likes got successfully',
-                likes: results
-            })
-        }
-    })
-} */
-
 exports.addLike = (req, res) => {
     const body = req.body;
 
@@ -61,9 +36,22 @@ exports.addLike = (req, res) => {
                 message: "User already Liked",
             })
         } else {
-            return res.status(200).json({
-                success: 1,
-                message: 'User Liked successfully',
+
+            addLike(body, (error, results) => {
+                if (error) {
+                    console.log(error);
+                    return;
+                }
+                if (!results) {
+                    return res.status(404).json({
+                        success: 0,
+                        message: "Add like failed"
+                    })
+                }
+                return res.status(200).json({
+                    success: 1,
+                    message: 'User Liked successfully',
+                })
             })
         } 
     }) 

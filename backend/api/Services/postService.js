@@ -47,18 +47,17 @@ exports.isLiked = (data, callback) => {
         })
 }
 
-/* exports.getLikeNbr = (data, callback) => {
-    pool.query(`SELECT likes FROM posts WHERE ID = ?`,
-    [data],
+exports.addLike = (data, callback) => {
+    pool.query(`UPDATE posts SET Likes = ? WHERE ID = ?`, 
+    [data.likes, data.postId], 
         (error, results, fields) => {
             if (error) {
                 return callback(error)
-            };
-
-            return callback(null, results[0].likes)
+            }
+            return callback(null, results)
         }
     )
-} */
+}
 
 exports.getPosts = (callback) => {
     pool.query(`SELECT idUser, pseudo, date, message, likes, ID FROM posts`,
