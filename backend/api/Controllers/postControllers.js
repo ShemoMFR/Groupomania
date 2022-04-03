@@ -1,4 +1,4 @@
-const { createPost, getPosts, getLikes, isLiked, addLike } = require('../Services/postService');
+const { createPost, getPosts, getLikes, isLiked, updateLike, addLike } = require('../Services/postService');
 
 exports.createPost = (req, res) => {
     const body = req.body;
@@ -36,6 +36,20 @@ exports.addLike = (req, res) => {
                 message: "User already Liked",
             })
         } else {
+
+            updateLike(body, (error, results) => {
+                if (error) {
+                    console.log(error);
+                    return;
+                }
+                if (!results) {
+                    return res.status(404).json({
+                        success: 0,
+                        message: "Update like failed"
+                    })
+                }
+               
+            })
 
             addLike(body, (error, results) => {
                 if (error) {

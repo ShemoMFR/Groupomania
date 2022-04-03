@@ -32,9 +32,7 @@ function Forum() {
         headers: new Headers({
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         }),
-        }).then( res => res.json()));  */
-
-    
+        }).then( res => res.json()));  */    
 
     return (
         <div className='containerForum'> 

@@ -47,9 +47,22 @@ exports.isLiked = (data, callback) => {
         })
 }
 
-exports.addLike = (data, callback) => {
+exports.updateLike = (data, callback) => {
     pool.query(`UPDATE posts SET Likes = ? WHERE ID = ?`, 
     [data.likes, data.postId], 
+        (error, results, fields) => {
+            if (error) {
+                return callback(error)
+            }
+            return callback(null, results)
+        }
+    )
+}
+
+exports.addLike = (data, callback) => {
+    const likeId = data.uuid.toString() + data.postId.toString();
+    pool.query(`INSERT INTO likes(postId, userId, Id) VALUES(?,?,?)`,
+    [data.postId, data.uuid, likeId],
         (error, results, fields) => {
             if (error) {
                 return callback(error)
