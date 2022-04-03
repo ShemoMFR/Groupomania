@@ -22,6 +22,8 @@ function Thread(props) {
 
     function handleClickLike(likes, postId, uuid) {
 
+        props.setIsUpdated(!props.isUpdated);
+
         const like = likes + 1;
 
         fetch('http://localhost:3000/api/posts/addLike', {

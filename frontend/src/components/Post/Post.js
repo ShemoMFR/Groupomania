@@ -16,6 +16,8 @@ function Post(props) {
 
         if (addMessage.length < 250) { 
 
+            props.setIsUpdated(!props.isUpdated);
+
             let user = JSON.parse(localStorage.getItem("user"));
 
             fetch('http://localhost:3000/api/posts/createPost', { 
