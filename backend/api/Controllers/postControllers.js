@@ -1,4 +1,4 @@
-const { createPost, getPosts, getLikes, isLiked, updateLike, addLike } = require('../Services/postService');
+const { createPost, getPosts, getLikes, isLiked, updateLike, addLike, deleteLike } = require('../Services/postService');
 
 exports.createPost = (req, res) => {
     const body = req.body;
@@ -21,29 +21,6 @@ exports.createPost = (req, res) => {
     })
 }
 
-/* exports.isLiked = (req, res) => {
-
-    const body = req.body;
-
-    isLiked(body, (error, results) => {
-
-        if (error) {
-            console.log(error);
-            return;
-        }
-        if (!results) {
-            return res.status(404).json({
-                success: 1,
-                message: "User already Liked",
-            })
-        } else {
-            return res.status(200).json({
-                success: 0
-            })
-        }
-    })
-} */
-
 exports.addLike = (req, res) => {
     const body = req.body;
 
@@ -54,10 +31,42 @@ exports.addLike = (req, res) => {
             return;
         }
         if (!results) {
-            return res.status(404).json({
+            /* return res.status(404).json({
                 success: 0,
                 message: "User already Liked",
+            }) */
+            body.likes = body.likes - 2;
+
+            updateLike(body, (error, results) => {
+                if (error) {
+                    console.log(error);
+                    return;
+                }
+                if (!results) {
+                    return res.status(404).json({
+                        success: 0,
+                        message: "Update like failed"
+                    })
+                }
             })
+
+            deleteLike(body, (error, results) => {
+                if (error) {
+                    console.log(error);
+                    return;
+                }
+                if (!results) {
+                    return res.status(404).json({
+                        success: 0,
+                        message: "Delete like failed"
+                    })
+                }
+                return res.status(200).json({
+                    success: 1,
+                    message: 'Delete Like successfully',
+                })
+            })
+
         } else {
 
             updateLike(body, (error, results) => {
@@ -71,7 +80,6 @@ exports.addLike = (req, res) => {
                         message: "Update like failed"
                     })
                 }
-               
             })
 
             addLike(body, (error, results) => {

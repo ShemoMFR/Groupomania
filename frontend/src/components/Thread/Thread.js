@@ -1,5 +1,5 @@
 /* LIBRAIRIES */ 
-import React, { useState } from 'react'
+import React from 'react'
 
 /* CSS */
 import './Thread.css'
@@ -12,19 +12,9 @@ function Thread(props) {
 
     function checkIfLikedPost(userId) {
 
-        /* props.postsLiked.data.forEach(objet => {
-
-            if (userId == objet.postId) {
-
-                console.log('test')
-                return true;
-            } 
-        }) */
-
         for (let i = 0; i < props.postsLiked.data.length; i++) {
             if (userId == props.postsLiked.data[i].postId) {
 
-                console.log('test')
                 return true;
             } 
         }

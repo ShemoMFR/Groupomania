@@ -72,6 +72,19 @@ exports.addLike = (data, callback) => {
     )
 }
 
+exports.deleteLike = (data, callback) => {
+    const likeId = data.uuid.toString() + data.postId.toString();
+    pool.query(`DELETE FROM likes WHERE Id = ?`,
+    [likeId], 
+        (error, results, fields) => {
+            if (error) {
+                return callback(error)
+            }
+            return callback(null, results)
+        }
+    )
+}
+
 exports.getPosts = (callback) => {
     pool.query(`SELECT idUser, pseudo, date, message, likes, ID FROM posts`,
     [], (error, results, fields) => {
