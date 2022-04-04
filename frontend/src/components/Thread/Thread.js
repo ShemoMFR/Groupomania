@@ -21,7 +21,9 @@ function Thread(props) {
 
         if (newArray.includes(postId)) {
             let index = newArray.indexOf(postId);
-            newArray.splice(index, 1);
+            /* newArray.splice(index, 1); */
+            newArray[index] = '';
+        
         } else {
             newArray.push(postId);
         }
@@ -90,13 +92,11 @@ function Thread(props) {
                                     :
                                     <div className='jaimeThread' onClick={() => handleClickLike(post.likes, post.ID, userId[0])}>{post.likes} <AiOutlineLike /> J'aime</div>
                                 }
-                                <div className='commentairesThread' onClick={() => handleClickComments(post.ID)} >Commentaires</div>
+                                <div className='commentairesThread' onClick={() => handleClickComments(post.ID)}>Commentaires</div>
                             </div>
                             {
                                 commentPost.includes(post.ID) &&
-                                <div className='containerCommentaires'>
                                     <Comments postId={post.ID} />
-                                </div> 
                             }
                         </div>
                     </div>
