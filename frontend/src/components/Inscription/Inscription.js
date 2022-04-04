@@ -27,7 +27,6 @@ function Inscription(props) {
         if (!regexEmail.test(email)) {
             setErrorEmail("L'email n'est pas valide");
             } else {
-                console.log(email, password, confirmation);
                 setErrorEmail('');
                 if (!regexPassword.test(password)) {
                     setErrorPassword("Le mot de passe n'est pas valide");

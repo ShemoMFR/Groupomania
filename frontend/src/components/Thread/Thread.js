@@ -1,5 +1,8 @@
 /* LIBRAIRIES */ 
-import React from 'react'
+import React, { useState } from 'react'
+
+/* COMPONENTS */
+import Comments from '../Comments/Comments';
 
 /* CSS */
 import './Thread.css'
@@ -10,15 +13,29 @@ import { AiOutlineLike } from 'react-icons/ai';
 
 function Thread(props) {
 
+    const [commentPost, setCommentPost] = useState([]);
+
+    function handleClickComments(postId) {
+
+        let newArray = [...commentPost];
+
+        if (newArray.includes(postId)) {
+            let index = newArray.indexOf(postId);
+            newArray.splice(index, 1);
+        } else {
+            newArray.push(postId);
+        }
+
+        setCommentPost(newArray);
+    }
+
     function checkIfLikedPost(userId) {
 
         for (let i = 0; i < props.postsLiked.data.length; i++) {
             if (userId == props.postsLiked.data[i].postId) {
-
                 return true;
             } 
         }
-
         return false;
     }
 
@@ -66,13 +83,21 @@ function Thread(props) {
                         </div>
                         <p className='threadMessage'>{post.message}</p>
                         <div className='containerLikesComments'>
+                            <div className='headerLikesComments'>
+                                {
+                                    checkIfLikedPost(post.ID) ?
+                                    <div className='jaimeThread' style={{color: 'orangered'}} onClick={() => handleClickLike(post.likes, post.ID, userId[0])}>{post.likes} <AiOutlineLike style={{color: "orangered"}} /> J'aime</div>
+                                    :
+                                    <div className='jaimeThread' onClick={() => handleClickLike(post.likes, post.ID, userId[0])}>{post.likes} <AiOutlineLike /> J'aime</div>
+                                }
+                                <div className='commentairesThread' onClick={() => handleClickComments(post.ID)} >Commentaires</div>
+                            </div>
                             {
-                                checkIfLikedPost(post.ID) ?
-                                <div className='jaimeThread' onClick={() => handleClickLike(post.likes, post.ID, userId[0])}>{post.likes} <AiOutlineLike style={{color: "blue"}} /> J'aime</div>
-                                :
-                                <div className='jaimeThread' onClick={() => handleClickLike(post.likes, post.ID, userId[0])}>{post.likes} <AiOutlineLike /> J'aime</div>
+                                commentPost.includes(post.ID) &&
+                                <div className='containerCommentaires'>
+                                    <Comments postId={post.ID} />
+                                </div> 
                             }
-                            <div className='commentairesThread'>Commentaires</div>
                         </div>
                     </div>
                 )
