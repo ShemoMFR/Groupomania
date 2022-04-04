@@ -10,6 +10,7 @@ import { MdAccountCircle } from 'react-icons/md';
 const Comments = (props) => {
 
     const [comment, setcomment] = useState('');
+    const [error, setError] = useState('');
     const [listComments, setListComments] = useState([]);
 
     function handleClick() {
@@ -37,9 +38,10 @@ const Comments = (props) => {
                 .catch( err => console.log(err))
 
             setcomment('');
+            setError('');
         }
         else {
-            props.setError('Votre message doit faire moins de 200 caractères');
+            setError('Votre message doit faire moins de 200 caractères');
         }
     }
 
@@ -57,6 +59,9 @@ const Comments = (props) => {
 
     return (
         <div className='containerComments'>
+            {
+                error && <p className='error'>{error}</p>
+            }
             <div className='containerInputCommentaire'>
                 <div className='commentCenter '>
                     <div>
@@ -77,7 +82,13 @@ const Comments = (props) => {
                 listComments.comments && listComments.comments.map( (comment, index) => {
 
                     return (
-                        <div key={index}>{comment.comment}</div>
+                        <div key={index} className='containerComment'>
+                            <div className='headerComment'>
+                                <div className='pseudoComment'>{comment.pseudo}</div>
+                                <div className='dateComment'>{comment.date}</div>
+                            </div>
+                            <div className='bodyComment'>{comment.comment}</div>
+                        </div>
                     )
                 })
             }
