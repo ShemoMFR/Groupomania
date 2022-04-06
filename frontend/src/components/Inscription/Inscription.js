@@ -47,6 +47,7 @@ function Inscription(props) {
                         })
                         .then(response => response.json())
                         .then(data => {
+                            localStorage.setItem('user', JSON.stringify([data.data.insertId, pseudo]));
                             setPseudo('');
                             setEmail('');
                             setPassword('');

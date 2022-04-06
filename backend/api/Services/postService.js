@@ -35,6 +35,7 @@ exports.isLiked = (data, callback) => {
     pool.query(`SELECT * FROM likes WHERE postId = ? AND userId = ?`,
     [data.postId, data.uuid],
         (error, results, fields) => {
+
             if (error) {
                 return callback(error)
             };

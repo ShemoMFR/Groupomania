@@ -31,13 +31,10 @@ exports.addLike = (req, res) => {
             return;
         }
         if (!results) {
-            /* return res.status(404).json({
-                success: 0,
-                message: "User already Liked",
-            }) */
+            
             body.likes = body.likes - 2;
-
             updateLike(body, (error, results) => {
+
                 if (error) {
                     console.log(error);
                     return;
@@ -51,6 +48,7 @@ exports.addLike = (req, res) => {
             })
 
             deleteLike(body, (error, results) => {
+
                 if (error) {
                     console.log(error);
                     return;
@@ -70,6 +68,7 @@ exports.addLike = (req, res) => {
         } else {
 
             updateLike(body, (error, results) => {
+
                 if (error) {
                     console.log(error);
                     return;
@@ -83,6 +82,7 @@ exports.addLike = (req, res) => {
             })
 
             addLike(body, (error, results) => {
+
                 if (error) {
                     console.log(error);
                     return;
