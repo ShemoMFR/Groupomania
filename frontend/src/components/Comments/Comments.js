@@ -12,6 +12,7 @@ const Comments = (props) => {
     const [comment, setcomment] = useState('');
     const [error, setError] = useState('');
     const [listComments, setListComments] = useState([]);
+    const [commentsUpdated, setCommentsUpdated] = useState(false);
 
     function handleClick() {
 
@@ -34,7 +35,7 @@ const Comments = (props) => {
                     pseudo: user[1], 
                 })})
                 .then( res => res.json())
-                .then( data => console.log(data))
+                .then( data => setCommentsUpdated(!commentsUpdated))
                 .catch( err => console.log(err))
 
             setcomment('');
@@ -55,7 +56,7 @@ const Comments = (props) => {
         .then(res => res.json())
         .then(data => setListComments(data))
         .catch(err => console.log(err)) 
-    }, [])
+    }, [commentsUpdated])
 
     return (
         <div className='containerComments'>

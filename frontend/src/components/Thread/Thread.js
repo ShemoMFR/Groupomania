@@ -14,20 +14,18 @@ import { AiOutlineLike } from 'react-icons/ai';
 function Thread(props) {
 
     const [commentPost, setCommentPost] = useState([]);
+    const [disableClick, setDisableClick] = useState(true)
 
     function handleClickComments(postId) {
 
         let newArray = [...commentPost];
-
         if (newArray.includes(postId)) {
             let index = newArray.indexOf(postId);
-            /* newArray.splice(index, 1); */
             newArray[index] = '';
         
         } else {
             newArray.push(postId);
         }
-
         setCommentPost(newArray);
     }
 
@@ -51,23 +49,31 @@ function Thread(props) {
         return 0;
     });    
 
-    function handleClickLike(likes, postId, uuid) {
+    async function handleClickLike(likes, postId, uuid) {
 
-        props.setIsUpdated(!props.isUpdated);
-        const like = likes + 1;
+        if (disableClick) {
 
-        fetch('http://localhost:3000/api/posts/addLike', {
-            method: 'PUT',
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }),
-            body: JSON.stringify({
-                likes: like,
-                postId: postId,
-                uuid: uuid
+            setDisableClick(false);
+            const response = await fetch('http://localhost:3000/api/posts/addLike', {
+                method: 'PUT',
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }),
+                body: JSON.stringify({
+                    likes: likes,
+                    postId: postId,
+                    uuid: uuid
+                })
             })
-        })
+    
+            if (response.ok) {
+                setDisableClick(true);
+                props.setIsUpdated(!props.isUpdated);
+            } else {
+                setDisableClick(true);
+            }       
+        }        
     }
     
     return (
@@ -87,7 +93,7 @@ function Thread(props) {
                         <div className='containerLikesComments'>
                             <div className='headerLikesComments'>
                                 {
-                                    checkIfLikedPost(post.ID) ?
+                                    checkIfLikedPost(post.ID) ? 
                                     <div className='jaimeThread' style={{color: 'orangered'}} onClick={() => handleClickLike(post.likes, post.ID, userId[0])}>{post.likes} <AiOutlineLike style={{color: "orangered"}} /> J'aime</div>
                                     :
                                     <div className='jaimeThread' onClick={() => handleClickLike(post.likes, post.ID, userId[0])}>{post.likes} <AiOutlineLike /> J'aime</div>

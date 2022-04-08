@@ -10,7 +10,7 @@ import './Forum.css'
 
 function Forum() {
 
-    const [posts, setPosts] = useState([]); // Récupère les infos de Post pour les envoyer à thread
+    const [posts, setPosts] = useState([]); 
     const [datas, setDatas] = useState([]);
     const [postsLiked, setPostsLiked] = useState([]);
     const [error, setError] = useState('');
@@ -46,25 +46,6 @@ function Forum() {
 
     }, [isUpdated])  
 
-    /* useEffect(() => {
-
-        const userId = JSON.parse(localStorage.getItem('user'));
-
-        fetch('http://localhost:3000/api/posts/getLikes', {
-                method: 'POST',
-                headers: new Headers({
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    'Content-Type': 'application/json'
-                }),
-                body: JSON.stringify({
-                    userId: userId[0]
-                })
-            })
-            .then(res => res.json())
-            .then(data => console.log(data))
-            .catch(err => console.log(err))
-    }, [isUpdated])  */
-
     return (
         <div className='containerForum'> 
             
@@ -80,4 +61,4 @@ function Forum() {
     )    
 }
 
-export default Forum
+export default Forum;

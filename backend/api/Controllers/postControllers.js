@@ -32,20 +32,7 @@ exports.addLike = (req, res) => {
         }
         if (!results) {
             
-            body.likes = body.likes - 2;
-            updateLike(body, (error, results) => {
-
-                if (error) {
-                    console.log(error);
-                    return;
-                }
-                if (!results) {
-                    return res.status(404).json({
-                        success: 0,
-                        message: "Update like failed"
-                    })
-                }
-            })
+            body.likes = body.likes - 1;
 
             deleteLike(body, (error, results) => {
 
@@ -65,8 +52,6 @@ exports.addLike = (req, res) => {
                 })
             })
 
-        } else {
-
             updateLike(body, (error, results) => {
 
                 if (error) {
@@ -80,6 +65,10 @@ exports.addLike = (req, res) => {
                     })
                 }
             })
+
+        } else {
+
+            body.likes = body.likes + 1;
 
             addLike(body, (error, results) => {
 
@@ -98,6 +87,21 @@ exports.addLike = (req, res) => {
                     message: 'User Liked successfully',
                 })
             })
+            updateLike(body, (error, results) => {
+
+                if (error) {
+                    console.log(error);
+                    return;
+                }
+                if (!results) {
+                    return res.status(404).json({
+                        success: 0,
+                        message: "Update like failed"
+                    })
+                }
+            })
+
+            
         } 
     }) 
 
