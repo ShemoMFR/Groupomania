@@ -30,7 +30,7 @@ function Post(props) {
                 body: JSON.stringify({
                     date: new Date().toDateString(),
                     message: addMessage,
-                    id: user[0],
+                    idUser: user[0],
                     pseudo: user[1]
                 })})
                 .then( res => res.json())

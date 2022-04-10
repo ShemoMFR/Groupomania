@@ -40,6 +40,20 @@
     word-wrap: break-word;
 }
 
+.deletePost {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    padding: 3px;
+    border: 2px solid orangered;
+    color: orangered;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .pseudoThread{
     font-weight: 700;
     font-size: 1.4em;
