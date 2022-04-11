@@ -18,6 +18,18 @@ exports.createPost = (data, callback) => {
     )
 }
 
+exports.deletePost = (data, callback) => {
+    pool.query(`DELETE FROM posts WHERE ID = ?; DELETE FROM likes WHERE postId = ?`,
+    [data, data], 
+        (error, results, fields) => {
+            if (error) {
+                return callback(error)
+            }
+            return callback(null, results)
+        }
+    )
+}
+
 exports.getLikes = (data, callback) => {
     pool.query(`SELECT postId FROM likes WHERE userId = ?`,
         [data], 

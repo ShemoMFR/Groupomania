@@ -16,8 +16,6 @@ function Post(props) {
 
         if (addMessage.length < 250) { 
 
-            props.setIsUpdated(!props.isUpdated);
-
             let user = JSON.parse(localStorage.getItem("user"));
 
             fetch('http://localhost:3000/api/posts/createPost', { 
@@ -39,6 +37,8 @@ function Post(props) {
 
             props.setError('');
             setAddMessage('');
+
+            props.setIsUpdated(!props.isUpdated);
         }
         else {
             props.setError('Votre message doit faire moins de 200 caractères');

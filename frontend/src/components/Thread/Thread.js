@@ -80,8 +80,6 @@ function Thread(props) {
         <div className='container'>
             { props.posts.data && props.posts.data.map((post, index) => {
 
-                console.log(userId, post)
-
                 return (
                     <div key={index} className='containerThread'>
                         <div className='headerThread'>
@@ -91,7 +89,7 @@ function Thread(props) {
                                 <div style={{fontSize: "0.7rem"}}>{post.date}</div>
                             </div>
                             {
-                                (userId[0] == post.idUser || userId[0] === '36') &&
+                                (userId[0] == post.idUser || userId[0] === 36 ) &&
                                 <span className='deletePost'>X</span>
 
                             }
