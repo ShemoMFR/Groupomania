@@ -147,7 +147,7 @@ function Thread(props) {
                             </div>
                             {
                                 commentPost.includes(post.ID) &&
-                                    <Comments postId={post.ID} userId={post.idUser} />
+                                    <Comments postId={post.ID} />
                             }
                         </div>
                     </div>

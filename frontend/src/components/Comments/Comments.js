@@ -47,6 +47,23 @@ const Comments = (props) => {
         }
     }
 
+    function hancleClickDelete(commentId) {
+
+        fetch('http://localhost:3000/api/comments/deleteComment', {
+            method: 'DELETE',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }),
+            body: JSON.stringify({
+                commentId: commentId
+            })
+        })
+        .then(res => res.json())
+        .then(data => setCommentsUpdated(!commentsUpdated))
+        .catch(err => console.log(err))
+    }
+
     useEffect(() => {
         fetch(`http://localhost:3000/api/comments/getCommentsByPost/${props.postId}`, {
             method: 'GET', 
@@ -89,8 +106,8 @@ const Comments = (props) => {
                                 <div className='pseudoComment'>{comment.pseudo}</div>
                                 <div className='dateComment'>{comment.date}</div>
                             {
-                                (userId[0] == props.userId || userId[0] === 36 ) &&
-                                <span className='deleteComment' /* onClick={() => hancleClickDelete(post.ID)} */>X</span>
+                                (userId[0] == comment.userId || userId[0] === 36 ) &&
+                                <span className='deleteComment' onClick={() => hancleClickDelete(comment.Id)} >X</span>
                             }
                             </div>
                             <div className='bodyComment'>{comment.comment}</div>
