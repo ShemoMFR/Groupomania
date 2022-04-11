@@ -13,6 +13,8 @@ import { AiOutlineLike } from 'react-icons/ai';
 
 function Thread(props) {
 
+    console.log(props)
+
     const [commentPost, setCommentPost] = useState([]);
     const [disableClick, setDisableClick] = useState(true)
 
@@ -41,7 +43,7 @@ function Thread(props) {
 
     const userId = JSON.parse(localStorage.getItem('user'));
 
-    props.posts.data && props.posts.data.sort(function compare(a, b) {
+    props.posts && props.posts.sort(function compare(a, b) {
         if (a.ID > b.ID)
             return -1;
         if (a.ID < b.ID )
@@ -97,7 +99,6 @@ function Thread(props) {
                 }
             }     
         }   
-          
     }
 
     function hancleClickDelete(postId) {
@@ -119,7 +120,7 @@ function Thread(props) {
     
     return (
         <div className='container'>
-            { props.posts.data && props.posts.data.map((post, index) => {
+            { props.posts && props.posts.map((post, index) => {
 
                 return (
                     <div key={index} className='containerThread'>
