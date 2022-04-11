@@ -16,7 +16,7 @@ function Thread(props) {
     console.log(props)
 
     const [commentPost, setCommentPost] = useState([]);
-    const [disableClick, setDisableClick] = useState(true)
+    const [disableClick, setDisableClick] = useState(true);
 
     function handleClickComments(postId) {
 
@@ -33,10 +33,13 @@ function Thread(props) {
 
     function checkIfLikedPost(postId) {
 
-        for (let i = 0; i < props.postsLiked.data.length; i++) {
-            if (postId == props.postsLiked.data[i].postId) {
-                return true;
-            } 
+        if (props.postLiked) {
+
+            for (let i = 0; i < props.postsLiked.data.length; i++) {
+                if (postId == props.postsLiked.data[i].postId) {
+                    return true;
+                } 
+            }
         }
         return false;
     }
