@@ -19,6 +19,18 @@ exports.createComment = (data, callback) => {
     )
 }
 
+exports.deleteComment = (data, callback) => {
+    pool.query(`DELETE FROM comments WHERE Id = ?`,
+    [data],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error)
+            }
+            return callback(null, results)
+        }
+    )
+}
+
 exports.getCommentsByPost = (data, callback) => {
     pool.query(`SELECT * FROM comments WHERE postId = ?`,
         [data],

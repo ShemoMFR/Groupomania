@@ -9,6 +9,7 @@ import { MdAccountCircle } from 'react-icons/md';
 
 const Comments = (props) => {
 
+    const userId = JSON.parse(localStorage.getItem('user'));
     const [comment, setcomment] = useState('');
     const [error, setError] = useState('');
     const [listComments, setListComments] = useState([]);
@@ -87,6 +88,10 @@ const Comments = (props) => {
                             <div className='headerComment'>
                                 <div className='pseudoComment'>{comment.pseudo}</div>
                                 <div className='dateComment'>{comment.date}</div>
+                            {
+                                (userId[0] == props.userId || userId[0] === 36 ) &&
+                                <span className='deleteComment' /* onClick={() => hancleClickDelete(post.ID)} */>X</span>
+                            }
                             </div>
                             <div className='bodyComment'>{comment.comment}</div>
                         </div>

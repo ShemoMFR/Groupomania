@@ -132,7 +132,6 @@ function Thread(props) {
                             {
                                 (userId[0] == post.idUser || userId[0] === 36 ) &&
                                 <span className='deletePost' onClick={() => hancleClickDelete(post.ID)}>X</span>
-
                             }
                         </div>
                         <p className='threadMessage'>{post.message}</p>
@@ -148,7 +147,7 @@ function Thread(props) {
                             </div>
                             {
                                 commentPost.includes(post.ID) &&
-                                    <Comments postId={post.ID} />
+                                    <Comments postId={post.ID} userId={post.idUser} />
                             }
                         </div>
                     </div>

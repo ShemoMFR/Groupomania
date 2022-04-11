@@ -1,4 +1,4 @@
-const { createComment, getCommentsByPost } = require('../Services/commentService');
+const { createComment, getCommentsByPost, deleteComment } = require('../Services/commentService');
 
 exports.createComment = (req, res) => {
     const body = req.body;
@@ -17,6 +17,27 @@ exports.createComment = (req, res) => {
         return res.status(200).json({
             success: 1,
             message: 'created successfully'
+        })
+    })
+}
+
+exports.deleteComment = (req, res) => {
+    const commentId = req.body.commentId;
+
+    deleteComment(commentId, (error, results) => {
+        if (error) {
+            console.log(error);
+            return;
+        }
+        if (!results) {
+            return res.status(404).json({
+                success: 0,
+                message: "Delete comment failed"
+            })
+        }
+        return res.status(200).json({
+            success: 1,
+            message: 'Delete comment successfully',
         })
     })
 }
