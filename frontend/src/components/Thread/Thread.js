@@ -143,11 +143,11 @@ function Thread(props) {
                                     :
                                     <div className='jaimeThread' onClick={() => handleClickLike(post.likes, post.ID, userId[0])}>{post.likes} <AiOutlineLike /> J'aime</div>
                                 }
-                                <div className='commentairesThread' onClick={() => handleClickComments(post.ID)}>Commentaires</div>
+                                <div className='commentairesThread' onClick={() => handleClickComments(post.ID)}>{post.comments} Commentaires</div>
                             </div>
                             {
                                 commentPost.includes(post.ID) &&
-                                    <Comments postId={post.ID} />
+                                    <Comments postId={post.ID} nbrComments={post.comments} isUpdated={props.isUpdated} setIsUpdated={props.setIsUpdated}/>
                             }
                         </div>
                     </div>

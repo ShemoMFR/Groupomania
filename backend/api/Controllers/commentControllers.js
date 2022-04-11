@@ -22,9 +22,9 @@ exports.createComment = (req, res) => {
 }
 
 exports.deleteComment = (req, res) => {
-    const commentId = req.body.commentId;
+    const body = req.body;
 
-    deleteComment(commentId, (error, results) => {
+    deleteComment(body, (error, results) => {
         if (error) {
             console.log(error);
             return;

@@ -34,9 +34,13 @@ const Comments = (props) => {
                     userId: user[0],
                     postId: props.postId,
                     pseudo: user[1], 
+                    nbrComments: props.nbrComments
                 })})
                 .then( res => res.json())
-                .then( data => setCommentsUpdated(!commentsUpdated))
+                .then( data => {
+                    setCommentsUpdated(!commentsUpdated); 
+                    props.setIsUpdated(!props.isUpdated)
+                })
                 .catch( err => console.log(err))
 
             setcomment('');
@@ -56,11 +60,16 @@ const Comments = (props) => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }),
             body: JSON.stringify({
-                commentId: commentId
+                commentId: commentId,
+                postId: props.postId,
+                nbrComments: props.nbrComments
             })
         })
         .then(res => res.json())
-        .then(data => setCommentsUpdated(!commentsUpdated))
+        .then(data => {
+            setCommentsUpdated(!commentsUpdated);
+            props.setIsUpdated(!props.isUpdated)
+        })
         .catch(err => console.log(err))
     }
 
