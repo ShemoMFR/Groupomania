@@ -29,10 +29,10 @@ function Thread(props) {
         setCommentPost(newArray);
     }
 
-    function checkIfLikedPost(userId) {
+    function checkIfLikedPost(postId) {
 
         for (let i = 0; i < props.postsLiked.data.length; i++) {
-            if (userId == props.postsLiked.data[i].postId) {
+            if (postId == props.postsLiked.data[i].postId) {
                 return true;
             } 
         }
@@ -53,27 +53,51 @@ function Thread(props) {
 
         if (disableClick) {
 
-            setDisableClick(false);
-            const response = await fetch('http://localhost:3000/api/posts/addLike', {
-                method: 'PUT',
-                headers: new Headers({
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }),
-                body: JSON.stringify({
-                    likes: likes,
-                    postId: postId,
-                    uuid: uuid
+            setDisableClick(false)
+
+            if (checkIfLikedPost(postId)) {
+                const response = await fetch('http://localhost:3000/api/posts/deleteLike', {
+                    method: 'PUT',
+                    headers: new Headers({
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }),
+                    body: JSON.stringify({
+                        likes: likes,
+                        postId: postId,
+                        uuid: uuid
+                    })
                 })
-            })
-    
-            if (response.ok) {
-                setDisableClick(true);
-                props.setIsUpdated(!props.isUpdated);
+        
+                if (response.ok) {
+                    setDisableClick(true);
+                    props.setIsUpdated(!props.isUpdated);
+                } else {
+                    setDisableClick(true);
+                }
             } else {
-                setDisableClick(true);
-            }       
-        }        
+                const response = await fetch('http://localhost:3000/api/posts/addLike', {
+                    method: 'PUT',
+                    headers: new Headers({
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }),
+                    body: JSON.stringify({
+                        likes: likes,
+                        postId: postId,
+                        uuid: uuid
+                    })
+                })
+        
+                if (response.ok) {
+                    setDisableClick(true);
+                    props.setIsUpdated(!props.isUpdated);
+                } else {
+                    setDisableClick(true);
+                }
+            }     
+        }   
+          
     }
 
     function hancleClickDelete(postId) {

@@ -60,7 +60,7 @@ exports.isLiked = (data, callback) => {
         })
 }
 
-exports.updateLike = (data, callback) => {
+/* exports.updateLike = (data, callback) => {
     pool.query(`UPDATE posts SET Likes = ? WHERE ID = ?`, 
     [data.likes, data.postId], 
         (error, results, fields) => {
@@ -70,25 +70,13 @@ exports.updateLike = (data, callback) => {
             return callback(null, results)
         }
     )
-}
-
-exports.addLike = (data, callback) => {
-    const likeId = data.uuid.toString() + data.postId.toString();
-    pool.query(`INSERT INTO likes(postId, userId, Id) VALUES(?,?,?)`,
-    [data.postId, data.uuid, likeId],
-        (error, results, fields) => {
-            if (error) {
-                return callback(error)
-            }
-            return callback(null, results)
-        }
-    )
-}
+} */
 
 exports.deleteLike = (data, callback) => {
+
     const likeId = data.uuid.toString() + data.postId.toString();
-    pool.query(`DELETE FROM likes WHERE Id = ?`,
-    [likeId], 
+    pool.query(`DELETE FROM likes WHERE Id = ?; UPDATE posts SET Likes = ? WHERE ID = ?`,
+    [likeId, data.likes, data.postId], 
         (error, results, fields) => {
             if (error) {
                 return callback(error)
@@ -97,6 +85,19 @@ exports.deleteLike = (data, callback) => {
         }
     )
 }
+exports.addLike = (data, callback) => {
+    const likeId = data.uuid.toString() + data.postId.toString();
+    pool.query(`INSERT INTO likes(postId, userId, Id) VALUES(?,?,?); UPDATE posts SET Likes = ? WHERE ID = ?`,
+    [data.postId, data.uuid, likeId, data.likes, data.postId],
+        (error, results, fields) => {
+            if (error) {
+                return callback(error)
+            }
+            return callback(null, results)
+        }
+    )
+}
+
 
 exports.getPosts = (callback) => {
     pool.query(`SELECT idUser, pseudo, date, message, likes, ID FROM posts`,
