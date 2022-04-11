@@ -75,6 +75,23 @@ function Thread(props) {
             }       
         }        
     }
+
+    function hancleClickDelete(postId) {
+
+        fetch('http://localhost:3000/api/posts/deletePost', {
+            method: 'DELETE',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }),
+            body: JSON.stringify({
+                postId: postId
+            })
+        })
+        .then(res => res.json())
+        .then(data => props.setIsUpdated(!props.isUpdated))
+        .catch(err => console.log(err))
+    }
     
     return (
         <div className='container'>
@@ -90,7 +107,7 @@ function Thread(props) {
                             </div>
                             {
                                 (userId[0] == post.idUser || userId[0] === 36 ) &&
-                                <span className='deletePost'>X</span>
+                                <span className='deletePost' onClick={() => hancleClickDelete(post.ID)}>X</span>
 
                             }
                         </div>

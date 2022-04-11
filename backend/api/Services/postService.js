@@ -19,8 +19,8 @@ exports.createPost = (data, callback) => {
 }
 
 exports.deletePost = (data, callback) => {
-    pool.query(`DELETE FROM posts WHERE ID = ?; DELETE FROM likes WHERE postId = ?`,
-    [data, data], 
+    pool.query(`DELETE FROM posts WHERE ID = ?; DELETE FROM likes WHERE postId = ?; DELETE FROM comments WHERE postId = ?`,
+    [data, data, data], 
         (error, results, fields) => {
             if (error) {
                 return callback(error)
