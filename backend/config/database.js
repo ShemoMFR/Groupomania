@@ -1,6 +1,7 @@
 const { createPool } = require("mysql");
 
 /* MULTIPLESATEMENT permet d'envoyer plusieurs requêtes SQL dans une seule query */ 
+/* pool permet de se connecter à la DB mysql */ 
 const pool = createPool({
     port: process.env.DB_PORT,
     host: process.env.DB_HOST,

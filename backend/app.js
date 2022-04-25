@@ -1,5 +1,5 @@
-// mise en place de Express
 require('dotenv').config();
+// mise en place de Express
 const express = require('express'); //importe le serveur express
 const app = express(); // créer l'application express
 const userRouter = require("./api/Routes/userRoutes");

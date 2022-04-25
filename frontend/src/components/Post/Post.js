@@ -31,14 +31,17 @@ function Post(props) {
                     idUser: user[0],
                     pseudo: user[1]
                 })})
-                .then( res => res.json())
-                .then( data => console.log(data))
-                .catch( err => console.log(err))
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success === 1) {
+                        props.setIsUpdated(!props.isUpdated);
+                    }
+                })
+                .catch(err => console.log(err))
 
             props.setError('');
             setAddMessage('');
 
-            props.setIsUpdated(!props.isUpdated);
         }
         else {
             props.setError('Votre message doit faire moins de 200 caractères');

@@ -29,21 +29,28 @@ exports.createUser = (req, res) => {
 exports.authenticateUser = (req, res) => {
     const body = req.body;
 
+    /* ICI on vérifie tout d'abord que l'email existe dans la table utilisateurs */ 
     authentification(body.email, (error, results) => {
 
         if (error) {
             console.log(error);
         }
 
+        /* Si pas de results, cela signifie qu'on a pas trouvé d'email dans la table donc on renvoie une erreur */ 
         if (!results) {
             return res.json({
                 success: 0,
-                data: 'Invalid email or password'
+                data: 'Invalid email'
             })
         }
 
+        /* SI on arrive à cette étape cela signifie qu'on a trouvé un email */ 
+        /* On doit donc vérifier que le mot de passe envoyé dans la requête (body.password) est égale à celui renvoyé par mysql qui est results.password*/ 
+
+        /* ICI result va comparer les deux password et contiendra soit TRUE ou FALSE */ 
         const result = bcrypt.compareSync(body.password, results.password);
 
+        /* SI les deux MDP sont égaux alors result = true, cela signifie qu'on peut se connecter et donc on renvoie côté front les datas suivantes */ 
         if (result) {
             results.password = undefined;
             const token = jwt.sign({ result: results}, 'secretkey', { expiresIn: '1h' });
@@ -54,10 +61,12 @@ exports.authenticateUser = (req, res) => {
                 id: results.id,
                 pseudo: results.pseudo
             })
+
+        /* Si non cela signifie que le password n'est pas le même que celui crypté donc on renvoie un message d'erreur */ 
         } else {
             return res.json({
                 success: 0,
-                data: 'Invalid email or password'
+                data: 'Invalid password'
             })
         }
 

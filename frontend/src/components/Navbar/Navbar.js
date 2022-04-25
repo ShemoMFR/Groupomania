@@ -20,10 +20,16 @@ import './Navbar.css';
 
 const Navbar = () => {
 
-    const [settingIsOpen, setSettingIsOpen] = useState(false);
+    const [settingMenuIsOpen, setSettingMenuIsOpen] = useState(false);
+    const [modalSettingsIsOpen, setModalSettingsIsOpen] = useState(false);
 
     function handleClickLogout() {
         localStorage.clear();
+    }
+
+    function hancleClickModalSettings() {
+        setSettingMenuIsOpen(!settingMenuIsOpen);
+        setModalSettingsIsOpen(!modalSettingsIsOpen);
     }
 
     return (
@@ -45,7 +51,7 @@ const Navbar = () => {
                 <div className='containerIconSettings'>
                     <AiTwotoneBell className='iconSettings'/>
                 </div>
-                <div className='containerIconSettings' onClick={() => setSettingIsOpen(!settingIsOpen)}>
+                <div className='containerIconSettings' onClick={() => setSettingMenuIsOpen(!settingMenuIsOpen)}>
                     <AiFillCaretDown className='iconSettings'/>
                 </div>
                 <Link to='/'>
@@ -55,26 +61,39 @@ const Navbar = () => {
                 </Link>
             </div>
 
-            { settingIsOpen &&
-                <div className='modalSettings'>
-                    <div className='settingsRow'>
-                        <FiSettings style={{width: "20px", height: "20px"}}/>
+            { settingMenuIsOpen &&
+                <div className='modalMenuSettings'>
+                    <div className='settingsRow' onClick={hancleClickModalSettings}>
+                        <FiSettings className='iconLogout'/>
                         <p>Paramètres</p>
                     </div>
                     <div className='settingsRow'>
-                        <FiLogOut style={{width: "20px", height: "20px"}}/>
+                        <FiLogOut className='iconLogout'/>
                         <p>Déconnexion</p>
                     </div>
                     <div className='settingsRow'>
-                        <BiHelpCircle style={{width: "20px", height: "20px"}}/>
+                        <BiHelpCircle className='iconLogout'/>
                         <p>Aide</p>
                     </div>
                     <div className='settingsRS'>
-                        <AiOutlineTwitter style={{width: "20px", height: "20px"}}/>
-                        <AiFillFacebook style={{width: "20px", height: "20px"}}/>
-                        <AiFillLinkedin style={{width: "20px", height: "20px"}}/>
+                        <AiOutlineTwitter className='iconRS' />
+                        <AiFillFacebook className='iconRS' />
+                        <AiFillLinkedin className='iconRS' />
                     </div>
                 </div>
+            }
+            {
+                modalSettingsIsOpen &&
+
+                    <div className='modalSettings'>
+                        <div className='containerFormSettings'>
+                            <div className='headerModalSettings' onClick={hancleClickModalSettings}>
+                                <FiSettings />
+                                <p>Paramètres</p>
+                            </div>
+                            <span className='exitModalSettings' onClick={() => setModalSettingsIsOpen(!modalSettingsIsOpen)}>X</span>
+                        </div>
+                    </div>
             }
 
         </div>

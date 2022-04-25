@@ -16,6 +16,7 @@ function Thread(props) {
     const [commentPost, setCommentPost] = useState([]);
     const [disableClick, setDisableClick] = useState(true);
 
+    /* Cette fonction va push dans le tableau commentPost l'id du post surlequel on a clické. Si l'Id se trouve déjà dans le tableau alors on l'efface */ 
     function handleClickComments(postId) {
 
         let newArray = [...commentPost];
@@ -29,20 +30,26 @@ function Thread(props) {
         setCommentPost(newArray);
     }
 
+    /* Ce function est appelée à chaque création de post (dans le .map se trouvant dans le jsx) */ 
+    /* Elle va vérifier si le postId est présent dans le tableau (reçu en props) qui contient tous les postId que l'utilisateur à liké */ 
+    /* Si il y a match alors la fonction return TRUE sinon elle retourne FALSE */ 
     function checkIfLikedPost(postId) {
 
-        for (let i = 0; i < props.postsLiked.data.length; i++) {
-            if (postId == props.postsLiked.data[i].postId) {
-                console.log("test2")
-                return true;
-            } 
+        if (props.postsLiked.data) {
+
+            for (let i = 0; i < props.postsLiked.data.length; i++) {
+                if (postId == props.postsLiked.data[i].postId) {
+                    return true;
+                } 
+            }
         }
-        
+
         return false;
     }
 
     const userId = JSON.parse(localStorage.getItem('user'));
 
+    /* Cette action trie le tableau des posts des plus récents au moins récents */ 
     props.posts && props.posts.sort(function compare(a, b) {
         if (a.ID > b.ID)
             return -1;
@@ -138,15 +145,16 @@ function Thread(props) {
                         <p className='threadMessage'>{post.message}</p>
                         <div className='containerLikesComments'>
                             <div className='headerLikesComments'>
-                                {
+                                {/* Ici on utilise la fonction pour vérifier si l'utilisateur à déjà liké ou non le post */ 
+                                /* Si il a liké alors la fonction retourne TRUE et donc le HTML va afficher la zone like en Orange. Sinon en noir */ 
                                     checkIfLikedPost(post.ID) ? 
                                     <div className='jaimeThread' style={{color: 'orangered'}} onClick={() => handleClickLike(post.likes, post.ID, userId[0])}>{post.likes} <AiOutlineLike style={{color: "orangered"}} /> J'aime</div>
                                     :
                                     <div className='jaimeThread' onClick={() => handleClickLike(post.likes, post.ID, userId[0])}>{post.likes} <AiOutlineLike /> J'aime</div>
                                 }
-                                <div className='commentairesThread' onClick={() => handleClickComments(post.ID)}>{post.comments} Commentaires</div>
+                                <div className='commentairesThread' onClick={() => handleClickComments(post.ID)}> {post.comments} Commentaires</div>
                             </div>
-                            {
+                            {/* On vérifie ici si le post.ID est inclu dans le tableau commentPost. Si oui alors il affiche le composant Comments, si non il affiche rien */
                                 commentPost.includes(post.ID) &&
                                     <Comments postId={post.ID} nbrComments={post.comments} isUpdated={props.isUpdated} setIsUpdated={props.setIsUpdated}/>
                             }

@@ -31,8 +31,16 @@ function Forum() {
         .catch(err => setError(err))
     }, [])
 
+    /* HOOK qui éxécute du code en fonction du cycle de vie du composant */ 
+    /* Ce useEffect éxécute le code QUAND le composant forum est monté MAIS AUSSI quand la valeur du state isUpdated est modifié */ 
+    /* Le useEffect à une dépendance qui est un tableau vide (pour quand l'élément est monté). Si on met quelque chose dans ce tableau,
+        cela signifie que le state va contrôler si l'élément mit dans le tableau a changé ou non. Si il a changé, il rééxute le code. */
+
     useEffect(() => {
 
+        /* Ce premier fetch récupère la liste de tous les posts qui ont été likés par l'utilisateur en cours */ 
+        /* Ce tableau est stocjé dans setPostsLiked() */ 
+        /* J'envoie dans le body le userId */
         fetch('http://localhost:3000/api/posts/getLikes', {
                 method: 'POST',
                 headers: new Headers({
@@ -44,7 +52,7 @@ function Forum() {
                 })
             })
             .then(res => res.json())
-            .then(data => setPostsLiked(data))
+            .then(data => {console.log(data); setPostsLiked(data) })
             .catch(err => console.log(err))
 
         fetch('http://localhost:3000/api/posts', {
