@@ -1,5 +1,6 @@
 /* LIBRAIRIES */ 
 import React, { useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 
 /* COMPONENTS */
 import Post from '../Post/Post';
@@ -27,7 +28,14 @@ function Forum() {
             })           
         })
         .then(res => res.json())
-        .then(data => setUsers(data))
+        .then(data => {
+            if (data.success === 0) {
+                localStorage.removeItem('token');
+                <Navigate to="/accueil" />
+            } else {
+                setUsers(data)
+            }
+        })
         .catch(err => setError(err))
     }, [])
 
@@ -52,7 +60,7 @@ function Forum() {
                 })
             })
             .then(res => res.json())
-            .then(data => {console.log(data); setPostsLiked(data) })
+            .then(data =>  setPostsLiked(data))
             .catch(err => console.log(err))
 
         fetch('http://localhost:3000/api/posts', {
@@ -62,7 +70,14 @@ function Forum() {
             })           
         })
         .then(res => res.json())
-        .then(data => setDatas(data.data))
+        .then(data => {
+            if (data.success === 0) {
+                localStorage.removeItem('token');
+                <Navigate to="/accueil" />
+            } else {
+                setDatas(data.data)
+            }
+        })
         .catch(err => setError(err))
 
     }, [isUpdated])  

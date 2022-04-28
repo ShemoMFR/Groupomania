@@ -2,6 +2,14 @@ const { create, getUsers, getUserById, updateUser, deleteUser, authentification 
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 
+exports.resToken = (req, res) => {
+
+    return res.status(200).json({
+        success: 1,
+        message: 'Token successfully checked'
+    })
+}
+
 exports.createUser = (req, res) => {
     const body = req.body;
     const salt = bcrypt.genSaltSync(10);

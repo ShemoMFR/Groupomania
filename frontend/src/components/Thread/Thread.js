@@ -43,7 +43,6 @@ function Thread(props) {
                 } 
             }
         }
-
         return false;
     }
 
@@ -62,8 +61,9 @@ function Thread(props) {
 
         if (disableClick) {
 
-            setDisableClick(false)
+            setDisableClick(false);
 
+            /* La fonction vérifie si postId est présent ou non dans le tableau qui contient tous les postId likés par l'user */ 
             if (checkIfLikedPost(postId)) {
                 const response = await fetch('http://localhost:3000/api/posts/deleteLike', {
                     method: 'PUT',
@@ -98,6 +98,7 @@ function Thread(props) {
                     })
                 })
         
+                /* disableClick permet d'éviter de pouvoir clicker plusieurs fois de suite et provoquer plusieurs call API afin d'éviter les bugs incrémentations */ 
                 if (response.ok) {
                     setDisableClick(true);
                     props.setIsUpdated(!props.isUpdated);
