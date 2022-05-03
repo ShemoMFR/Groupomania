@@ -135,6 +135,7 @@ exports.updateUser = (req, res) => {
 
 exports.deleteUser = (req, res) => {
     const data = req.params.id;
+
     deleteUser(data, (err, results) => {
 
         if (err) {

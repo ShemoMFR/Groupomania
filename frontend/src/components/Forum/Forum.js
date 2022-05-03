@@ -13,7 +13,7 @@ function Forum() {
 
     const userId = JSON.parse(localStorage.getItem('user'));
 
-    const [posts, setPosts] = useState([]); 
+    const [posts, setPosts] = useState([]);
     const [datas, setDatas] = useState([]);
     const [postsLiked, setPostsLiked] = useState([]);
     const [error, setError] = useState('');

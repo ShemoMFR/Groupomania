@@ -17,6 +17,7 @@ function Thread(props) {
     const [disableClick, setDisableClick] = useState(true);
 
     /* Cette fonction va push dans le tableau commentPost l'id du post surlequel on a clické. Si l'Id se trouve déjà dans le tableau alors on l'efface */ 
+    /* CAR ensuite côté front, on va checker si l'ID du post EST dans ce tableau. Si il l'est, cela signifie qu'il faut afficher les commentaires */ 
     function handleClickComments(postId) {
 
         let newArray = [...commentPost];

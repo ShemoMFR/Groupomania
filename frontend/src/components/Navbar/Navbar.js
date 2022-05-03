@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 
+/* COMPONENTS */ 
+import Settings from '../Settings/Settings';
+
 /* IMAGES */
 import Logo from '../../Images/icon.png';
 
@@ -28,7 +31,7 @@ const Navbar = () => {
     }
 
     function hancleClickModalSettings() {
-        setSettingMenuIsOpen(!settingMenuIsOpen);
+        setSettingMenuIsOpen(settingMenuIsOpen);
         setModalSettingsIsOpen(!modalSettingsIsOpen);
     }
 
@@ -67,12 +70,14 @@ const Navbar = () => {
                         <FiSettings className='iconLogout'/>
                         <p>Paramètres</p>
                     </div>
+                    <Link to='/' className='NZ'>
+                        <div className='settingsRow' onClick={handleClickLogout}>
+                            <FiLogOut className='iconLogout' />
+                            <p>Déconnexion</p>
+                        </div>
+                    </Link>
                     <div className='settingsRow'>
-                        <FiLogOut className='iconLogout'/>
-                        <p>Déconnexion</p>
-                    </div>
-                    <div className='settingsRow'>
-                        <BiHelpCircle className='iconLogout'/>
+                        <BiHelpCircle className='iconLogout' />
                         <p>Aide</p>
                     </div>
                     <div className='settingsRS'>
@@ -84,16 +89,7 @@ const Navbar = () => {
             }
             {
                 modalSettingsIsOpen &&
-
-                    <div className='modalSettings'>
-                        <div className='containerFormSettings'>
-                            <div className='headerModalSettings' onClick={hancleClickModalSettings}>
-                                <FiSettings />
-                                <p>Paramètres</p>
-                            </div>
-                            <span className='exitModalSettings' onClick={() => setModalSettingsIsOpen(!modalSettingsIsOpen)}>X</span>
-                        </div>
-                    </div>
+                <Settings modalSettingsIsOpen={modalSettingsIsOpen} setModalSettingsIsOpen={setModalSettingsIsOpen}/>
             }
 
         </div>
