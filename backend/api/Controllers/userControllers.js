@@ -118,9 +118,11 @@ exports.getUsers = (req, res) => {
 }
 
 exports.updateUser = (req, res) => {
-    const body = req.body;
-    const salt = bcrypt.genSaltSync(10);
-    body.password = bcrypt.hashSync(body.password, salt);
+    const body = {
+        pseudo: req.body.pseudo,
+        id: req.params.id
+    }
+    
     updateUser(body, (error, results) => {
         if (error) {
             console.log(error);

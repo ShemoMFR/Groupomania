@@ -52,11 +52,11 @@ exports.getUserById = (id, callback) => {
 }
 
 exports.updateUser = (data, callback) => {
-    pool.query(`UPDATE utilisateurs SET pseudo = ?, email = ?, password = ? WHERE id = ?`,
+
+    console.log(data)
+    pool.query(`UPDATE utilisateurs SET pseudo = ? WHERE id = ?`,
     [
         data.pseudo, 
-        data.email, 
-        data.password, 
         data.id
     ],
     (error, results, fields) => {

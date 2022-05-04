@@ -13,6 +13,8 @@ function Settings(props) {
     const [newPseudo, setNewPseudo] = useState('');
     let navigate = useNavigate();
 
+    const user = JSON.parse(localStorage.getItem("user"))
+
     /* const [modalSettingsIsOpen, setModalSettingsIsOpen] = useState(false); */
 
     /* function hancleClickModalSettings() {
@@ -21,8 +23,6 @@ function Settings(props) {
     } */
 
     function handleClickDeleteAccount() {
-
-        const user = JSON.parse(localStorage.getItem("user"));
 
         if (user[0] !== 36) {
             fetch(`http://localhost:3000/api/users/${user[0]}`, {
@@ -48,6 +48,26 @@ function Settings(props) {
         setNewPseudo(e.target.value);
     }
 
+    function handleSubmitPseudo() {
+        fetch(`http://localhost:3000/api/users/${user[0]}`, {
+            method: 'PUT',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }),
+            body: JSON.stringify({
+                pseudo: newPseudo,
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            alert("Pseudo changé avec succès");
+            console.log(user[0], newPseudo)
+            localStorage.setItem("user", JSON.stringify([user[0], newPseudo]));
+        })
+        .catch(err => console.log(err))
+    }
+
     return (
         <div className='modalSettings'>
             <div className='containerFormSettings'>
@@ -59,7 +79,11 @@ function Settings(props) {
                     <label className='labelPseudo'>Changer de pseudo :</label>
                     <input className='inputPseudo' type="text" placeholder="Nouveau pseudo" onChange={(e) => handleClickChange(e)}/>
                 </div>
-                <div className='bntDelete' onClick={handleClickDeleteAccount}>SUPPRESSION DU COMPTE</div>
+                <div onClick={handleSubmitPseudo} className='btnChangePseudo'>CHANGER</div>
+                {
+                    user[0] !== 36 && <div className='bntDelete' onClick={handleClickDeleteAccount}>SUPPRESSION DU COMPTE</div>
+
+                }
                 <span className='exitModalSettings' onClick={() => props.setModalSettingsIsOpen(!props.modalSettingsIsOpen)}>X</span>
             </div>
         </div>
