@@ -1,4 +1,4 @@
-const { create, getUsers, getUserById, updateUser, deleteUser, authentification } = require('../Services/userService');
+const { create, getUsers, getUserById, updateUser, deleteUser, authentification, countLikesComments } = require('../Services/userService');
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 
@@ -136,7 +136,24 @@ exports.updateUser = (req, res) => {
 }
 
 exports.deleteUser = (req, res) => {
-    const data = req.params.id;
+
+    let data = {
+        userId: req.params.id,
+        nbrLikes: "",
+        nbrComments: ""
+    }
+
+    countLikesComments(req.params.id, (error, results) => {
+        if (error) {
+            console.log(error);
+            return;
+        }
+
+        if (results) {
+            console.log(results[0][0].nbrLikes);
+        }
+
+    })
 
     deleteUser(data, (err, results) => {
 

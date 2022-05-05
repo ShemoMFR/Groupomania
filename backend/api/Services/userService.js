@@ -73,8 +73,20 @@ exports.updateUser = (data, callback) => {
 
 exports.deleteUser = (data, callBack) => {
     pool.query(`DELETE FROM utilisateurs WHERE id = ?; DELETE FROM posts WHERE idUser = ?; DELETE FROM comments WHERE userId = ?; DELETE FROM likes WHERE userId = ?`,
-    [data, data, data, data], 
+    [data.userId, data.userId, data.userId, data.userId], 
     (error, results, fields) => {
+        if (error) {
+            return callBack(error);
+        }
+        return callBack(null, results)
+    })
+}
+
+exports.countLikesComments = (data, callBack) => {
+    pool.query(`SELECT COUNT(*) as nbrLikes FROM likes WHERE userID = ?; SELECT COUNT(*) as nbrComments FROM comments WHERE userId = ?`,
+    [data, data],
+    (error, results, fields) => {
+
         if (error) {
             return callBack(error);
         }
