@@ -30,7 +30,7 @@ function Settings(props) {
                 headers: new Headers({
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
-                })
+                })               
             })
             .then(res => res.json())
             .then(data => {
@@ -61,8 +61,9 @@ function Settings(props) {
         })
         .then(res => res.json())
         .then(data => {
+            props.setIsUpdated(!props.isUpdated);
             alert("Pseudo changé avec succès");
-            console.log(user[0], newPseudo)
+            props.setModalSettingsIsOpen(!props.modalSettingsIsOpen)
             localStorage.setItem("user", JSON.stringify([user[0], newPseudo]));
         })
         .catch(err => console.log(err))

@@ -21,7 +21,7 @@ import { BiHelpCircle } from 'react-icons/bi';
 /* CSS */ 
 import './Navbar.css';
 
-const Navbar = () => {
+const Navbar = (props) => {
 
     const [settingMenuIsOpen, setSettingMenuIsOpen] = useState(false);
     const [modalSettingsIsOpen, setModalSettingsIsOpen] = useState(false);
@@ -89,7 +89,7 @@ const Navbar = () => {
             }
             {
                 modalSettingsIsOpen &&
-                <Settings modalSettingsIsOpen={modalSettingsIsOpen} setModalSettingsIsOpen={setModalSettingsIsOpen}/>
+                <Settings modalSettingsIsOpen={modalSettingsIsOpen} setModalSettingsIsOpen={setModalSettingsIsOpen} isUpdated={props.isUpdated} setIsUpdated={props.setIsUpdated}/>
             }
 
         </div>

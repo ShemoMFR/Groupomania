@@ -53,9 +53,12 @@ exports.getUserById = (id, callback) => {
 
 exports.updateUser = (data, callback) => {
 
-    console.log(data)
-    pool.query(`UPDATE utilisateurs SET pseudo = ? WHERE id = ?`,
+    pool.query(`UPDATE utilisateurs SET pseudo = ? WHERE id = ?; UPDATE posts SET pseudo = ? WHERE idUser = ?; UPDATE comments SET pseudo = ? WHERE userId = ?`,
     [
+        data.pseudo, 
+        data.id,
+        data.pseudo, 
+        data.id,  
         data.pseudo, 
         data.id
     ],
@@ -69,8 +72,8 @@ exports.updateUser = (data, callback) => {
 }
 
 exports.deleteUser = (data, callBack) => {
-    pool.query(`DELETE FROM utilisateurs WHERE id = ?`,
-    [data], 
+    pool.query(`DELETE FROM utilisateurs WHERE id = ?; DELETE FROM posts WHERE idUser = ?; DELETE FROM comments WHERE userId = ?; DELETE FROM likes WHERE userId = ?`,
+    [data, data, data, data], 
     (error, results, fields) => {
         if (error) {
             return callBack(error);

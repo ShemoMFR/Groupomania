@@ -1,5 +1,5 @@
 /* LIBRAIRIES */
-import React from 'react';
+import React, { useState } from 'react';
 
 /* COMPONENTS */ 
 import Navbar from '../../components/Navbar/Navbar';
@@ -9,10 +9,13 @@ import Forum from '../../components/Forum/Forum';
 import './Accueil.css'; 
 
 const Accueil = () => {
+
+    const [isUpdated, setIsUpdated] = useState(false);
+
     return (
         <div>
-            <Navbar />
-            <Forum />
+            <Navbar isUpdated={isUpdated} setIsUpdated={setIsUpdated}/>
+            <Forum isUpdated={isUpdated} setIsUpdated={setIsUpdated}/>
         </div>
     )
 }

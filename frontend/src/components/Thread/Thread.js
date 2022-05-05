@@ -47,7 +47,7 @@ function Thread(props) {
         return false;
     }
 
-    const userId = localStorage.getItem('user');
+    const userId = JSON.parse(localStorage.getItem('user'));
 
     /* Cette action trie le tableau des posts des plus récents au moins récents */ 
     props.posts && props.posts.sort(function compare(a, b) {
@@ -59,6 +59,8 @@ function Thread(props) {
     });    
 
     async function handleClickLike(likes, postId, uuid) {
+
+        console.log(uuid)
 
         if (disableClick) {
 

@@ -9,7 +9,7 @@ import Thread from '../Thread/Thread';
 /*CSS*/
 import './Forum.css'
 
-function Forum() {
+function Forum(props) {
 
     const userId = JSON.parse(localStorage.getItem('user'));
 
@@ -17,7 +17,6 @@ function Forum() {
     const [datas, setDatas] = useState([]);
     const [postsLiked, setPostsLiked] = useState([]);
     const [error, setError] = useState('');
-    const [isUpdated, setIsUpdated] = useState(false);
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -80,7 +79,7 @@ function Forum() {
         })
         .catch(err => setError(err))
 
-    }, [isUpdated])  
+    }, [props.isUpdated])  
 
     return (
         <div className='containerForum'> 
@@ -98,12 +97,12 @@ function Forum() {
             }
             </div>
             
-            <Post isUpdated={isUpdated} setIsUpdated={setIsUpdated} posts={posts} setPosts={setPosts} setError={setError}/>
+            <Post isUpdated={props.isUpdated} setIsUpdated={props.setIsUpdated} posts={posts} setPosts={setPosts} setError={setError}/>
             {
                 error !== '' &&
                 <div style={{marginTop: "20px", color: "red", fontSize: "1.3rem"}}>{error}</div> 
             }
-            { datas && postsLiked && <Thread posts={datas} postsLiked={postsLiked} isUpdated={isUpdated} setIsUpdated={setIsUpdated}/> }
+            { datas && postsLiked && <Thread posts={datas} postsLiked={postsLiked} isUpdated={props.isUpdated} setIsUpdated={props.setIsUpdated}/> }
 
         </div> 
     )    
