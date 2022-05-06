@@ -30,7 +30,10 @@ function Settings(props) {
                 headers: new Headers({
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
-                })               
+                }),
+                body: JSON.stringify({
+                    userId: user[0]
+                })
             })
             .then(res => res.json())
             .then(data => {

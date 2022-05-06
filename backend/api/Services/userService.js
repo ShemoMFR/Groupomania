@@ -70,10 +70,11 @@ exports.updateUser = (data, callback) => {
         return callback(null, results[0])
     })
 }
+/*; DELETE FROM comments WHERE userId = ?; DELETE FROM likes WHERE userId = ? , data.userId, data.userId */ 
 
 exports.deleteUser = (data, callBack) => {
-    pool.query(`DELETE FROM utilisateurs WHERE id = ?; DELETE FROM posts WHERE idUser = ?; DELETE FROM comments WHERE userId = ?; DELETE FROM likes WHERE userId = ?`,
-    [data.userId, data.userId, data.userId, data.userId], 
+    pool.query(`DELETE FROM utilisateurs WHERE id = ?; DELETE FROM posts WHERE idUser = ?`,
+    [data.userId, data.userId], 
     (error, results, fields) => {
         if (error) {
             return callBack(error);
@@ -82,14 +83,15 @@ exports.deleteUser = (data, callBack) => {
     })
 }
 
-exports.countLikesComments = (data, callBack) => {
-    pool.query(`SELECT COUNT(*) as nbrLikes FROM likes WHERE userID = ?; SELECT COUNT(*) as nbrComments FROM comments WHERE userId = ?`,
+/* exports.countLikesComments = (data, callBack) => {
+    pool.query(`SELECT COUNT(*) as nbrLikes FROM likes WHERE userID = ?; SELECT COUNT(*) as nbrComments FROM comments WHERE userId = ?; SELECT likes FROM posts WHERE ID = ?; SELECT comments FROM posts WHERE ID = ?`,
     [data, data],
     (error, results, fields) => {
-
         if (error) {
             return callBack(error);
         }
+    
         return callBack(null, results)
     })
-}
+} */
+

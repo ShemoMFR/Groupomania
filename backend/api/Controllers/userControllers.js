@@ -77,7 +77,6 @@ exports.authenticateUser = (req, res) => {
                 data: 'Invalid password'
             })
         }
-
     })
 }
 
@@ -139,22 +138,22 @@ exports.deleteUser = (req, res) => {
 
     let data = {
         userId: req.params.id,
-        nbrLikes: "",
-        nbrComments: ""
+        postId: req.body.postId
     }
-
-    countLikesComments(req.params.id, (error, results) => {
+    /* countLikesComments(req.params.id, (error, results) => {
         if (error) {
             console.log(error);
             return;
         }
 
         if (results) {
-            console.log(results[0][0].nbrLikes);
+
+            return res.json({
+                nbrLikes: results[0][0].nbrLikes,
+                nbrComments: results[1][0].nbrComments
+            })
         }
-
-    })
-
+    }) */
     deleteUser(data, (err, results) => {
 
         if (err) {
