@@ -108,11 +108,10 @@ function Forum(props) {
             {
                 users.data && users.data.map((user, index) => {
 
-                    console.log(user)
                     return (
                         userId[0] == 64 ?
                         <div className='containerMembre' key={index}>
-                            🟢{user.pseudo} <span className='deleteMembers' onClick={() => hancleClickDeleteMember(user.id, user.pseudo)}>X</span>
+                            🟢{user.pseudo} {user.id !== 64 && <span className='deleteMembers' onClick={() => hancleClickDeleteMember(user.id, user.pseudo)}> X </span>}
                         </div>
                         :
                         <div className='containerMembre' key={index}>
