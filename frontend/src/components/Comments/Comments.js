@@ -115,7 +115,7 @@ const Comments = (props) => {
                                 <div className='pseudoComment'>{comment.pseudo}</div>
                                 <div className='dateComment'>{comment.date}</div>
                             {
-                                (userId[0] == comment.userId || userId[0] === 36 ) &&
+                                (userId[0] == comment.userId || userId[0] === 64 ) &&
                                 <span className='deleteComment' onClick={() => hancleClickDelete(comment.Id)} >X</span>
                             }
                             </div>

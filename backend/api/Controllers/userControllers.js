@@ -138,7 +138,10 @@ exports.deleteUser = (req, res) => {
 
     let data = {
         userId: req.params.id,
+        pseudo: req.body.pseudo
+
     }
+
     /* countLikesComments(req.params.id, (error, results) => {
         if (error) {
             console.log(error);

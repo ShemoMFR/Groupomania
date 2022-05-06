@@ -24,7 +24,7 @@ function Settings(props) {
 
     function handleClickDeleteAccount() {
 
-        if (user[0] !== 36) {
+        if (user[0] !== 64) {
             fetch(`http://localhost:3000/api/users/${user[0]}`, {
                 method: 'DELETE',
                 headers: new Headers({
@@ -32,7 +32,7 @@ function Settings(props) {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }),
                 body: JSON.stringify({
-                    userId: user[0]
+                    pseudo: user[1]
                 })
             })
             .then(res => res.json())
@@ -85,7 +85,7 @@ function Settings(props) {
                 </div>
                 <div onClick={handleSubmitPseudo} className='btnChangePseudo'>CHANGER</div>
                 {
-                    user[0] !== 36 && <div className='bntDelete' onClick={handleClickDeleteAccount}>SUPPRESSION DU COMPTE</div>
+                    user[0] !== 64 && <div className='bntDelete' onClick={handleClickDeleteAccount}>SUPPRESSION DU COMPTE</div>
 
                 }
                 <span className='exitModalSettings' onClick={() => props.setModalSettingsIsOpen(!props.modalSettingsIsOpen)}>X</span>

@@ -82,13 +82,16 @@ function Forum(props) {
 
     }, [props.isUpdated])  
 
-    function hancleClickDeleteMember(id) {
+    function hancleClickDeleteMember(id, pseudo) {
         
         fetch(`http://localhost:3000/api/users/${id}`, {
                 method: 'DELETE',
                 headers: new Headers({
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }),
+                body: JSON.stringify({
+                    pseudo
                 })
             })
             .then(res => res.json())
@@ -106,9 +109,9 @@ function Forum(props) {
             {
                 users.data && users.data.map((user, index) => {
                     return (
-                        userId[0] == 36 ?
+                        userId[0] ==64 ?
                         <div className='containerMembre' key={index}>
-                            🟢{user.pseudo} <span className='deleteMembers' onClick={() => hancleClickDeleteMember(user.id)}>X</span>
+                            🟢{user.pseudo} <span className='deleteMembers' onClick={() => hancleClickDeleteMember(user.id, user.pseudo)}>X</span>
                         </div>
                         :
                         <div className='containerMembre' key={index}>

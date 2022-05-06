@@ -142,7 +142,7 @@ function Thread(props) {
                                 <div style={{fontSize: "0.7rem"}}>{post.date}</div>
                             </div>
                             {
-                                (userId[0] == post.idUser || userId[0] === 36 ) &&
+                                (userId[0] == post.idUser || userId[0] === 64 ) &&
                                 <span className='deletePost' onClick={() => hancleClickDelete(post.ID)}>X</span>
                             }
                         </div>

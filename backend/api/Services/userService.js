@@ -73,8 +73,10 @@ exports.updateUser = (data, callback) => {
 /*; DELETE FROM comments WHERE userId = ?; DELETE FROM likes WHERE userId = ? , data.userId, data.userId */ 
 
 exports.deleteUser = (data, callBack) => {
-    pool.query(`DELETE FROM utilisateurs WHERE id = ?; DELETE FROM posts WHERE idUser = ?`,
-    [data.userId, data.userId], 
+
+    let newPseudo = data.pseudo + "(Utilisateur supprimé)";
+    pool.query(`DELETE FROM utilisateurs WHERE id = ?; DELETE FROM posts WHERE idUser = ?; UPDATE comments SET pseudo = ? WHERE userId = ?`,
+    [data.userId, data.userId, newPseudo, data.userId], 
     (error, results, fields) => {
         if (error) {
             return callBack(error);
