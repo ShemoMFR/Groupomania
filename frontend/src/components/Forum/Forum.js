@@ -18,6 +18,7 @@ function Forum(props) {
     const [postsLiked, setPostsLiked] = useState([]);
     const [error, setError] = useState('');
     const [users, setUsers] = useState([]);
+    const [membersUpdated, setMembersUpdated] = useState(false);
 
     useEffect(() => {
         fetch('http://localhost:3000/api/users', {
@@ -36,7 +37,7 @@ function Forum(props) {
             }
         })
         .catch(err => setError(err))
-    }, [])
+    }, [membersUpdated])
 
     /* HOOK qui éxécute du code en fonction du cycle de vie du composant */ 
     /* Ce useEffect éxécute le code QUAND le composant forum est monté MAIS AUSSI quand la valeur du state isUpdated est modifié */ 
@@ -81,6 +82,22 @@ function Forum(props) {
 
     }, [props.isUpdated])  
 
+    function hancleClickDeleteMember(id) {
+        
+        fetch(`http://localhost:3000/api/users/${id}`, {
+                method: 'DELETE',
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                setMembersUpdated(!membersUpdated);
+            })
+            .catch(err => console.log(err))
+    }
+
     return (
         <div className='containerForum'> 
             <div className='nameUser'>Bonjour <span style={{color: "orangered"}}>{userId[1]}</span></div>
@@ -89,6 +106,11 @@ function Forum(props) {
             {
                 users.data && users.data.map((user, index) => {
                     return (
+                        userId[0] == 36 ?
+                        <div className='containerMembre' key={index}>
+                            🟢{user.pseudo} <span className='deleteMembers' onClick={() => hancleClickDeleteMember(user.id)}>X</span>
+                        </div>
+                        :
                         <div className='containerMembre' key={index}>
                             🟢{user.pseudo}
                         </div>
