@@ -89,7 +89,7 @@ const Navbar = (props) => {
             }
             {
                 modalSettingsIsOpen &&
-                <Settings modalSettingsIsOpen={modalSettingsIsOpen} setModalSettingsIsOpen={setModalSettingsIsOpen} isUpdated={props.isUpdated} setIsUpdated={props.setIsUpdated}/>
+                <Settings commentsUpdated={props.commentsUpdated} setCommentsUpdated={props.setCommentsUpdated} membersUpdated={props.membersUpdated} setMembersUpdated={props.setMembersUpdated} modalSettingsIsOpen={modalSettingsIsOpen} setModalSettingsIsOpen={setModalSettingsIsOpen} isUpdated={props.isUpdated} setIsUpdated={props.setIsUpdated}/>
             }
 
         </div>

@@ -18,7 +18,6 @@ function Forum(props) {
     const [postsLiked, setPostsLiked] = useState([]);
     const [error, setError] = useState('');
     const [users, setUsers] = useState([]);
-    const [membersUpdated, setMembersUpdated] = useState(false);
 
     useEffect(() => {
         fetch('http://localhost:3000/api/users', {
@@ -37,7 +36,7 @@ function Forum(props) {
             }
         })
         .catch(err => setError(err))
-    }, [membersUpdated])
+    }, [props.membersUpdated])
 
     /* HOOK qui éxécute du code en fonction du cycle de vie du composant */ 
     /* Ce useEffect éxécute le code QUAND le composant forum est monté MAIS AUSSI quand la valeur du state isUpdated est modifié */ 
@@ -96,7 +95,7 @@ function Forum(props) {
             })
             .then(res => res.json())
             .then(data => {
-                setMembersUpdated(!membersUpdated);
+                props.setMembersUpdated(!props.membersUpdated);
             })
             .catch(err => console.log(err))
     }
@@ -108,8 +107,10 @@ function Forum(props) {
             <h1 className='titleMembres'>Membres <span style={{color: "orangered"}}>Groupomania</span></h1>
             {
                 users.data && users.data.map((user, index) => {
+
+                    console.log(user)
                     return (
-                        userId[0] ==64 ?
+                        userId[0] == 64 ?
                         <div className='containerMembre' key={index}>
                             🟢{user.pseudo} <span className='deleteMembers' onClick={() => hancleClickDeleteMember(user.id, user.pseudo)}>X</span>
                         </div>
@@ -127,7 +128,7 @@ function Forum(props) {
                 error !== '' &&
                 <div style={{marginTop: "20px", color: "red", fontSize: "1.3rem"}}>{error}</div> 
             }
-            { datas && postsLiked && <Thread posts={datas} postsLiked={postsLiked} isUpdated={props.isUpdated} setIsUpdated={props.setIsUpdated}/> }
+            { datas && postsLiked && <Thread posts={datas} postsLiked={postsLiked} isUpdated={props.isUpdated} setIsUpdated={props.setIsUpdated} commentsUpdated={props.commentsUpdated} setCommentsUpdated={props.setCommentsUpdated}/> }
 
         </div> 
     )    

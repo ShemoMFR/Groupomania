@@ -10,6 +10,8 @@ import { FiSettings } from 'react-icons/fi';
 
 function Settings(props) {
 
+    console.log(props)
+
     const [newPseudo, setNewPseudo] = useState('');
     let navigate = useNavigate();
 
@@ -37,7 +39,6 @@ function Settings(props) {
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 localStorage.clear();
                 navigate("/");
             })
@@ -65,6 +66,8 @@ function Settings(props) {
         .then(res => res.json())
         .then(data => {
             props.setIsUpdated(!props.isUpdated);
+            props.setMembersUpdated(!props.membersUpdated);
+            props.setCommentsUpdated(props.setCommentsUpdated);
             alert("Pseudo changé avec succès");
             props.setModalSettingsIsOpen(!props.modalSettingsIsOpen)
             localStorage.setItem("user", JSON.stringify([user[0], newPseudo]));

@@ -11,11 +11,13 @@ import './Accueil.css';
 const Accueil = () => {
 
     const [isUpdated, setIsUpdated] = useState(false);
+    const [membersUpdated, setMembersUpdated] = useState(false);
+    const [commentsUpdated, setCommentsUpdated] = useState(false);
 
     return (
         <div>
-            <Navbar isUpdated={isUpdated} setIsUpdated={setIsUpdated}/>
-            <Forum isUpdated={isUpdated} setIsUpdated={setIsUpdated}/>
+            <Navbar commentsUpdated={commentsUpdated} setCommentsUpdated={setCommentsUpdated} isUpdated={isUpdated} setIsUpdated={setIsUpdated} membersUpdated={membersUpdated} setMembersUpdated={setMembersUpdated}/>
+            <Forum commentsUpdated={commentsUpdated} setCommentsUpdated={setCommentsUpdated} isUpdated={isUpdated} setIsUpdated={setIsUpdated} membersUpdated={membersUpdated} setMembersUpdated={setMembersUpdated}/>
         </div>
     )
 }

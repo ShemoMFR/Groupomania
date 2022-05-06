@@ -160,7 +160,7 @@ function Thread(props) {
                             </div>
                             {/* On vérifie ici si le post.ID est inclu dans le tableau commentPost. Si oui alors il affiche le composant Comments, si non il affiche rien */
                                 commentPost.includes(post.ID) &&
-                                    <Comments postId={post.ID} nbrComments={post.comments} isUpdated={props.isUpdated} setIsUpdated={props.setIsUpdated}/>
+                                    <Comments commentsUpdated={props.commentsUpdated} setCommentsUpdated={props.setCommentsUpdated} postId={post.ID} nbrComments={post.comments} isUpdated={props.isUpdated} setIsUpdated={props.setIsUpdated}/>
                             }
                         </div>
                     </div>
