@@ -1,11 +1,11 @@
 const { createComment, getCommentsByPost, deleteComment } = require('../Controllers/commentControllers');
 
 const router = require('express').Router();
-const { checkToken } = require('../../config/tokenAuth');
+const { checkToken, checkTokenS } = require('../../config/tokenAuth');
 
 /* ROUTER COMMENTS */ 
 router.post('/createComment', checkToken, createComment);
 router.get('/getCommentsByPost/:id', checkToken, getCommentsByPost);
-router.delete('/deleteComment', checkToken, deleteComment);
+router.delete('/deleteComment', checkTokenS, deleteComment);
 
 module.exports = router;  

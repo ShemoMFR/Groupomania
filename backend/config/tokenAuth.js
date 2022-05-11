@@ -36,8 +36,9 @@ exports.checkTokenS = (req, res, next) => {
 
             if (method === "DELETE") {
 
-                if (decoded.result.id === id || decoded.result.groupe === 'admin') {
+                if (decoded.result.id == id || decoded.result.groupe === 'admin') {
                     next();
+                    
                 } else {
                     res.json({
                         success: 0,

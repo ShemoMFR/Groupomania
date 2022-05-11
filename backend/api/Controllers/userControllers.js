@@ -62,7 +62,6 @@ exports.authenticateUser = (req, res) => {
         if (result) {
             results.password = undefined;
             const token = jwt.sign({ result: results }, 'secretkey', { expiresIn: '1h' });
-            console.log({ result: results })
             return res.json({
                 success: 1,
                 message: 'Login successfully',

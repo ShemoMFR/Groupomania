@@ -112,7 +112,7 @@ function Thread(props) {
         }   
     }
 
-    function hancleClickDelete(postId) {
+    function hancleClickDelete(postId, userId) {
 
         fetch('http://localhost:3000/api/posts/deletePost', {
             method: 'DELETE',
@@ -122,7 +122,8 @@ function Thread(props) {
             }),
             body: JSON.stringify({
                 postId: postId,
-                status: 1
+                status: 1,
+                userId: userId
             })
         })
         .then(res => res.json())
@@ -144,7 +145,7 @@ function Thread(props) {
                             </div>
                             {
                                 (userId[0] == post.idUser || userId[0] === 64 ) &&
-                                <span className='deletePost' onClick={() => hancleClickDelete(post.ID)}>X</span>
+                                <span className='deletePost' onClick={() => hancleClickDelete(post.ID, post.idUser)}>X</span>
                             }
                         </div>
                         <p className='threadMessage'>{post.message}</p>

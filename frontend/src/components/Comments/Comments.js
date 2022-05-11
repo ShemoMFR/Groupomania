@@ -50,7 +50,7 @@ const Comments = (props) => {
         }
     }
 
-    function hancleClickDelete(commentId) {
+    function hancleClickDelete(commentId, userId) {
 
         fetch('http://localhost:3000/api/comments/deleteComment', {
             method: 'DELETE',
@@ -61,7 +61,8 @@ const Comments = (props) => {
             body: JSON.stringify({
                 commentId: commentId,
                 postId: props.postId,
-                nbrComments: props.nbrComments
+                nbrComments: props.nbrComments,
+                userId: userId
             })
         })
         .then(res => res.json())
@@ -115,7 +116,7 @@ const Comments = (props) => {
                                 <div className='dateComment'>{comment.date}</div>
                             {
                                 (userId[0] == comment.userId || userId[0] === 64 ) &&
-                                <span className='deleteComment' onClick={() => hancleClickDelete(comment.Id)} >X</span>
+                                <span className='deleteComment' onClick={() => hancleClickDelete(comment.Id, comment.userId)} >X</span>
                             }
                             </div>
                             <div className='bodyComment'>{comment.comment}</div>
