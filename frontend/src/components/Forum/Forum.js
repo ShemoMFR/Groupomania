@@ -90,7 +90,8 @@ function Forum(props) {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }),
                 body: JSON.stringify({
-                    pseudo
+                    pseudo,
+                    userId: id
                 })
             })
             .then(res => res.json())

@@ -23,7 +23,7 @@ exports.createUser = (req, res) => {
                 message: "Database connexion error"
             })
         } else {
-            const token = jwt.sign({ result: results}, 'secretkey', { expiresIn: '1h' });
+            const token = jwt.sign({ result: results }, 'secretkey', { expiresIn: '1h' });
 
             return res.status(200).json({
                 success: 1,
@@ -61,7 +61,8 @@ exports.authenticateUser = (req, res) => {
         /* SI les deux MDP sont égaux alors result = true, cela signifie qu'on peut se connecter et donc on renvoie côté front les datas suivantes */ 
         if (result) {
             results.password = undefined;
-            const token = jwt.sign({ result: results}, 'secretkey', { expiresIn: '1h' });
+            const token = jwt.sign({ result: results }, 'secretkey', { expiresIn: '1h' });
+            console.log({ result: results })
             return res.json({
                 success: 1,
                 message: 'Login successfully',

@@ -6,13 +6,17 @@ exports.create = (data, callback) => {
         [
             data.pseudo, 
             data.email, 
-            data.password, 
+            data.password,
         ],
         (error, results, fields) => {
             if (error) { 
                 return callback(error)
             }
-            return callback(null, results)
+
+            let result = {
+                id: results.insertId
+            }
+            return callback(null, result)
         }
     )
 }

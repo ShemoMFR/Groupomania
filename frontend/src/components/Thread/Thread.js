@@ -121,7 +121,8 @@ function Thread(props) {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }),
             body: JSON.stringify({
-                postId: postId
+                postId: postId,
+                status: 1
             })
         })
         .then(res => res.json())

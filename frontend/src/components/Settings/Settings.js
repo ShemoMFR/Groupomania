@@ -34,7 +34,8 @@ function Settings(props) {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }),
                 body: JSON.stringify({
-                    pseudo: user[1]
+                    pseudo: user[1],
+                    userId: user[0]
                 })
             })
             .then(res => res.json())
