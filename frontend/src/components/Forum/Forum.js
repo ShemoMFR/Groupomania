@@ -83,7 +83,7 @@ function Forum(props) {
 
     function hancleClickDeleteMember(id, pseudo) {
         
-        fetch(`http://localhost:3000/api/users/${id}`, {
+        fetch("http://localhost:3000/api/users/deleteUser", {
                 method: 'DELETE',
                 headers: new Headers({
                     'Content-Type': 'application/json',

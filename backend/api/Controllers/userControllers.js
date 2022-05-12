@@ -119,7 +119,7 @@ exports.getUsers = (req, res) => {
 exports.updateUser = (req, res) => {
     const body = {
         pseudo: req.body.pseudo,
-        id: req.params.id
+        id: req.body.userId
     }
     
     updateUser(body, (error, results) => {
@@ -137,25 +137,11 @@ exports.updateUser = (req, res) => {
 exports.deleteUser = (req, res) => {
 
     let data = {
-        userId: req.params.id,
+        userId: req.body.userId,
         pseudo: req.body.pseudo
 
     }
 
-    /* countLikesComments(req.params.id, (error, results) => {
-        if (error) {
-            console.log(error);
-            return;
-        }
-
-        if (results) {
-
-            return res.json({
-                nbrLikes: results[0][0].nbrLikes,
-                nbrComments: results[1][0].nbrComments
-            })
-        }
-    }) */
     deleteUser(data, (err, results) => {
 
         if (err) {

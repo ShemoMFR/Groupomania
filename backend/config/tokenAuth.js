@@ -34,7 +34,7 @@ exports.checkTokenS = (req, res, next) => {
         token = token.slice(7);
         jwt.verify(token, "secretkey", (err, decoded) => {
 
-            if (method === "DELETE") {
+            if (method === "DELETE" ||method === 'PUT') {
 
                 if (decoded.result.id == id || decoded.result.groupe === 'admin') {
                     next();
@@ -53,12 +53,6 @@ exports.checkTokenS = (req, res, next) => {
                 })
             };
 
-            if (err) {
-                res.json({
-                    success: 0,
-                    message: "Token invalid"
-                })
-            }
         })
     } else {
         res.json({

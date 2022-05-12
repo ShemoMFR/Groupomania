@@ -14,11 +14,12 @@ const Comments = (props) => {
     const [error, setError] = useState('');
     const [listComments, setListComments] = useState([]);
 
+    let user = JSON.parse(localStorage.getItem("user"));
+
     function handleClick() {
 
-        if (comment.length < 200) { 
 
-            let user = JSON.parse(localStorage.getItem("user"));
+        if (comment.length < 200) { 
 
             fetch('http://localhost:3000/api/comments/createComment', { 
                 method: 'POST', 
@@ -62,7 +63,7 @@ const Comments = (props) => {
                 commentId: commentId,
                 postId: props.postId,
                 nbrComments: props.nbrComments,
-                userId: userId
+                userId: userId,
             })
         })
         .then(res => res.json())
