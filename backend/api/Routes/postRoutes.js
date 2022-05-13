@@ -4,7 +4,7 @@ const router = require('express').Router();
 const { checkToken, checkTokenS } = require('../../config/tokenAuth');
 
 /* ROUTER POST */ 
-router.post('/createPost', checkToken, createPost);
+router.post('/createPost', checkTokenS, createPost);
 router.post('/getLikes', checkToken, getLikes);
 router.put('/addLike', checkToken, addLike);
 router.put('/deleteLike', checkToken, deleteLike);

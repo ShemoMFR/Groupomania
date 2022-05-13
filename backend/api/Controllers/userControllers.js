@@ -23,6 +23,7 @@ exports.createUser = (req, res) => {
                 message: "Database connexion error"
             })
         } else {
+            
             const token = jwt.sign({ result: results }, 'secretkey', { expiresIn: '1h' });
 
             return res.status(200).json({

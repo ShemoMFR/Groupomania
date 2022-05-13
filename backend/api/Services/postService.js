@@ -4,7 +4,7 @@ exports.createPost = (data, callback) => {
     pool.query(`INSERT INTO posts(idUser, pseudo, date, message) 
     values(?,?,?,?)`,
         [
-            data.idUser,
+            data.userId,
             data.pseudo,
             data.date,
             data.message,

@@ -28,7 +28,7 @@ function Post(props) {
                 body: JSON.stringify({
                     date: new Date().toDateString(),
                     message: addMessage,
-                    idUser: user[0],
+                    userId: user[0],
                     pseudo: user[1]
                 })})
                 .then(res => res.json())

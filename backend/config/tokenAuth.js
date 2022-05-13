@@ -5,7 +5,9 @@ exports.checkToken = (req, res, next) =>{
 
     if (token) {
         token = token.slice(7);
+
         jwt.verify(token, "secretkey", (err, decoded) => {
+            
             if (err) {
                 res.json({
                     success: 0,
@@ -34,7 +36,7 @@ exports.checkTokenS = (req, res, next) => {
         token = token.slice(7);
         jwt.verify(token, "secretkey", (err, decoded) => {
 
-            if (method === "DELETE" ||method === 'PUT') {
+            if (method === "DELETE" || method === 'PUT' || method === 'POST') {
 
                 if (decoded.result.id == id || decoded.result.groupe === 'admin') {
                     next();
