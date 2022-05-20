@@ -101,7 +101,7 @@ exports.addLike = (data, callback) => {
 
 
 exports.getPosts = (callback) => {
-    pool.query(`SELECT idUser, pseudo, date, message, likes, comments, ID FROM posts`,
+    pool.query(`SELECT idUser, pseudo, date, message, likes, comments, ID, image FROM posts`,
     [], (error, results, fields) => {
         if (error) {
             return callback(error); 

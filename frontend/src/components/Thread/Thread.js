@@ -135,6 +135,8 @@ function Thread(props) {
         <div className='container'>
             { props.posts && props.posts.map((post, index) => {
 
+                console.log(post)
+
                 return (
                     <div key={index} className='containerThread'>
                         <div className='headerThread'>
@@ -149,6 +151,7 @@ function Thread(props) {
                             }
                         </div>
                         <p className='threadMessage'>{post.message}</p>
+                        <img src={`../../../../backend/images/${post.image}`} crossOrigin="anonymous" alt='postImage'/>
                         <div className='containerLikesComments'>
                             <div className='headerLikesComments'>
                                 {/* Ici on utilise la fonction pour vérifier si l'utilisateur à déjà liké ou non le post */ 

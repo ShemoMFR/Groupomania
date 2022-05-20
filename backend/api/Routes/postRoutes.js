@@ -8,7 +8,8 @@ const path = require('path');
 const storage = multer.diskStorage({
     destination: "./images",
     filename: (req, file, cb) => {
-        return cb(null, `${Date.now()}_${path.extname(file.originalname)}`);
+        console.log(req.body, file)
+        return cb(null, `${Date.now()}_groupomania_${path.extname(file.originalname)}`);
     }
 })
 
