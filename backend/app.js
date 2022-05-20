@@ -5,7 +5,10 @@ const app = express(); // créer l'application express
 const userRouter = require("./api/Routes/userRoutes");
 const postRouter = require("./api/Routes/postRoutes");
 const commentRouter = require("./api/Routes/commentRoutes");
-/* const path = require('path');/* Permet de créer une route vers notre dossier images */
+const path = require('path');/* Permet de créer une route vers notre dossier images */
+const helmet = require('helmet');
+const hpp = require('hpp');
+
 /* const { endianness } = require('os'); */
 
 app.use(express.json());//Pour gérer la requête POST venant de l'application front-end, on a besoin d'en extraire le corps JSON
@@ -22,5 +25,12 @@ app.use((req, res, next) => {
 app.use("/api/users", userRouter);
 app.use("/api/posts", postRouter);
 app.use("/api/comments", commentRouter);
+
+/* Permet de rendre accessible l'image via url */
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
+/* MIDDLEWARES de sécurité */ 
+app.use(helmet()); // protection des headers HTTP
+app.use(hpp()); // protection des injections SQL 
 
 module.exports = app;

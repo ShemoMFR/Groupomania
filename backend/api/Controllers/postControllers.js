@@ -4,7 +4,7 @@ exports.createPost = (req, res) => {
 
     const body = req.body;
     body.filename = req.file.filename;
-
+ 
     createPost(body, (error, results) => {
         if (error) {
             console.log(error);
