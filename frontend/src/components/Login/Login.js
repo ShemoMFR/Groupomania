@@ -25,11 +25,11 @@ const Login = (props) => {
                     body: JSON.stringify({
                         email: email,
                         password: password
-                    }),
+                    })
                 })
                 .then(response => response.json())
                 .then(data => {
-
+                    
                     if (data.success === 1) {
                         localStorage.setItem('user', JSON.stringify([data.id, data.pseudo]));
                         localStorage.setItem('token', data.token);

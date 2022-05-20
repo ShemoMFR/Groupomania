@@ -1,8 +1,11 @@
 const { createPost, getPosts, getLikes, isLiked, /* updateLike, */ addLike, deleteLike, deletePost } = require('../Services/postService');
 
 exports.createPost = (req, res) => {
+
+    console.log(req.body, req.file)
+
     const body = req.body;
-    
+
     createPost(body, (error, results) => {
         if (error) {
             console.log(error);
