@@ -3,7 +3,8 @@ const { createPost, getPosts, getLikes, isLiked, /* updateLike, */ addLike, dele
 exports.createPost = (req, res) => {
 
     const body = req.body;
-    body.filename = req.file.filename;
+
+    req.file ? body.filename = req.file.filename : body.filename = null;
  
     createPost(body, (error, results) => {
         if (error) {

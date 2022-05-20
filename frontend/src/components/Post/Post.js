@@ -27,7 +27,7 @@ function Post(props) {
             const formData = new FormData();
 
             formData.append('postImg', image);
-            formData.append('authorId', user[0]);
+            formData.append('userId', user[0]);
             formData.append('date', new Date().toDateString());
             formData.append('message', addMessage);
             formData.append('pseudo', user[1]);
@@ -46,6 +46,7 @@ function Post(props) {
                 .then(data => {
                     if (data.success === 1) {
                         props.setIsUpdated(!props.isUpdated);
+                        setImage('');
                     }
                 })
                 .catch(err => console.log(err))

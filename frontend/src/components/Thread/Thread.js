@@ -149,7 +149,9 @@ function Thread(props) {
                             }
                         </div>
                         <p className='threadMessage'>{post.message}</p>
-                        {post.image && <img src={`http://localhost:3000/images/${post.image}`} alt='postImage'/> }
+                            {/* Ici on injecte l'image du poste en passant par l'url qui donne acces au dossier "images" de notre back */ }
+                        {post.image && <img className='postImage' src={`http://localhost:3000/images/${post.image}`} alt='postImage'/> }
+
                         <div className='containerLikesComments'>
                             <div className='headerLikesComments'>
                                 {/* Ici on utilise la fonction pour vérifier si l'utilisateur à déjà liké ou non le post */ 

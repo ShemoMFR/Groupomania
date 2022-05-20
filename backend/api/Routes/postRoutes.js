@@ -5,6 +5,7 @@ const { checkToken, checkTokenS } = require('../../config/tokenAuth');
 const multer = require('multer');
 const path = require('path');
 
+/* Stocker et nommer les images */
 const storage = multer.diskStorage({
     destination: "./images",
     filename: (req, file, cb) => {
@@ -12,6 +13,7 @@ const storage = multer.diskStorage({
     }
 })
 
+/* Filtres format images */ 
 const fileFilter = (req, file, cb) => {
     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
         cb(null, true);

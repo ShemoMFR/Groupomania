@@ -32,5 +32,5 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 /* MIDDLEWARES de sécurité */ 
 app.use(helmet()); // protection des headers HTTP
 app.use(hpp()); // protection des injections SQL 
-
+ 
 module.exports = app;
