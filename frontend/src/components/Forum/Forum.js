@@ -1,6 +1,6 @@
 /* LIBRAIRIES */ 
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 /* COMPONENTS */
 import Post from '../Post/Post';
@@ -12,6 +12,7 @@ import './Forum.css'
 function Forum(props) {
 
     const userId = JSON.parse(localStorage.getItem('user'));
+    let navigate = useNavigate();
 
     const [posts, setPosts] = useState([]);
     const [datas, setDatas] = useState([]);
@@ -30,12 +31,15 @@ function Forum(props) {
         .then(data => {
             if (data.success === 0) {
                 localStorage.removeItem('token');
-                <Navigate to="/accueil" />
+                navigate("/");
             } else {
                 setUsers(data)
             }
         })
-        .catch(err => setError(err))
+        .catch(err => {
+            localStorage.removeItem('token');
+            navigate("/");
+        })
     }, [props.membersUpdated])
 
     /* HOOK qui éxécute du code en fonction du cycle de vie du composant */ 
@@ -59,8 +63,18 @@ function Forum(props) {
                 })
             })
             .then(res => res.json())
-            .then(data =>  setPostsLiked(data))
-            .catch(err => console.log(err))
+            .then(data =>  {
+                if (data.success === 0) {
+                    localStorage.removeItem('token');
+                    navigate("/");
+                } else {
+                    setPostsLiked(data)
+                }
+            })
+            .catch(err => {
+                localStorage.removeItem('token');
+                navigate("/");
+            })
 
         fetch('http://localhost:3000/api/posts', {
             method: 'GET', 
@@ -72,12 +86,15 @@ function Forum(props) {
         .then(data => {
             if (data.success === 0) {
                 localStorage.removeItem('token');
-                <Navigate to="/accueil" />
+                navigate("/");
             } else {
                 setDatas(data.data)
             }
         })
-        .catch(err => setError(err))
+        .catch(err => {
+            localStorage.removeItem('token');
+            navigate("/");
+        })
 
     }, [props.isUpdated])  
 
@@ -96,9 +113,17 @@ function Forum(props) {
             })
             .then(res => res.json())
             .then(data => {
-                props.setMembersUpdated(!props.membersUpdated);
+                if (data.success === 0) {
+                    localStorage.removeItem('token');
+                    navigate("/");
+                } else {
+                    props.setMembersUpdated(!props.membersUpdated);
+                }
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                localStorage.removeItem('token');
+                navigate("/");
+            })
     }
 
     return (

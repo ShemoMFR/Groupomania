@@ -1,5 +1,6 @@
 /* LIBRAIRIES */ 
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 /* CSS */
 import './Post.css'
@@ -14,6 +15,8 @@ function Post(props) {
     const [addMessage, setAddMessage] = useState('');
     const [uploadImage, setUploadImage] = useState(false);
     const [image, setImage] = useState('');
+
+    let navigate = useNavigate();
 
     useEffect(() => {
         addMessage.length < 1 && setUploadImage(false);
@@ -47,9 +50,15 @@ function Post(props) {
                     if (data.success === 1) {
                         props.setIsUpdated(!props.isUpdated);
                         setImage('');
+                    } else {
+                        localStorage.removeItem('token');
+                        navigate("/");
                     }
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                    localStorage.removeItem('token');
+                    navigate("/");
+                })
 
             props.setError('');
             setAddMessage('');

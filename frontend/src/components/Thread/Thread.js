@@ -1,5 +1,6 @@
 /* LIBRAIRIES */ 
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 
 /* COMPONENTS */
 import Comments from '../Comments/Comments';
@@ -15,6 +16,7 @@ function Thread(props) {
 
     const [commentPost, setCommentPost] = useState([]);
     const [disableClick, setDisableClick] = useState(true);
+    let navigate = useNavigate();
 
     /* Cette fonction va push dans le tableau commentPost l'id du post surlequel on a clické. Si l'Id se trouve déjà dans le tableau alors on l'efface */ 
     /* CAR ensuite côté front, on va checker si l'ID du post EST dans ce tableau. Si il l'est, cela signifie qu'il faut afficher les commentaires */ 
@@ -58,7 +60,7 @@ function Thread(props) {
         return 0;
     });    
 
-    async function handleClickLike(likes, postId, uuid) {
+    function handleClickLike(likes, postId, uuid) {
 
         if (disableClick) {
 
@@ -66,7 +68,7 @@ function Thread(props) {
 
             /* La fonction vérifie si postId est présent ou non dans le tableau qui contient tous les postId likés par l'user */ 
             if (checkIfLikedPost(postId)) {
-                const response = await fetch('http://localhost:3000/api/posts/deleteLike', {
+                fetch('http://localhost:3000/api/posts/deleteLike', {
                     method: 'PUT',
                     headers: new Headers({
                         'Content-Type': 'application/json',
@@ -78,15 +80,23 @@ function Thread(props) {
                         uuid: uuid
                     })
                 })
-        
-                if (response.ok) {
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success === 0) {
+                        localStorage.removeItem('token');
+                        navigate("/");
+                    } else {
+                        setDisableClick(true);
+                        props.setIsUpdated(!props.isUpdated);
+                    }
+                })
+                .catch(err => {
                     setDisableClick(true);
-                    props.setIsUpdated(!props.isUpdated);
-                } else {
-                    setDisableClick(true);
-                }
+                    localStorage.removeItem('token');
+                    navigate("/");
+                })
             } else {
-                const response = await fetch('http://localhost:3000/api/posts/addLike', {
+                fetch('http://localhost:3000/api/posts/addLike', {
                     method: 'PUT',
                     headers: new Headers({
                         'Content-Type': 'application/json',
@@ -98,21 +108,26 @@ function Thread(props) {
                         uuid: uuid
                     })
                 })
-        
-                /* disableClick permet d'éviter de pouvoir clicker plusieurs fois de suite et provoquer plusieurs call API afin d'éviter les bugs incrémentations */ 
-                if (response.ok) {
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success === 0) {
+                        localStorage.removeItem('token');
+                        navigate("/");
+                    } else {
+                        setDisableClick(true);
+                        props.setIsUpdated(!props.isUpdated);
+                    }
+                })
+                .catch(err => {
                     setDisableClick(true);
-                    props.setIsUpdated(!props.isUpdated);
-                } else {
-                    setDisableClick(true);
-                }
+                    localStorage.removeItem('token');
+                    navigate("/");
+                })
             }     
         }   
     }
 
     function hancleClickDelete(postId, userId, filename) {
-
-        console.log(filename)
 
         fetch('http://localhost:3000/api/posts/deletePost', {
             method: 'DELETE',
@@ -128,8 +143,18 @@ function Thread(props) {
             })
         })
         .then(res => res.json())
-        .then(data => props.setIsUpdated(!props.isUpdated))
-        .catch(err => console.log(err))
+        .then(data => {
+            if (data.success === 0) {
+                localStorage.removeItem('token');
+                navigate("/");
+            } else {
+                props.setIsUpdated(!props.isUpdated);
+            }
+        })
+        .catch(err => {
+            localStorage.removeItem('token');
+            navigate("/");
+        })
     }
     
     return (
