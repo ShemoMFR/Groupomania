@@ -1,4 +1,5 @@
 const { createPost, getPosts, getLikes, isLiked, /* updateLike, */ addLike, deleteLike, deletePost } = require('../Services/postService');
+const fs = require('fs');
 
 exports.createPost = (req, res) => {
 
@@ -26,6 +27,7 @@ exports.createPost = (req, res) => {
 
 exports.deletePost = (req, res) => {
     const postId = req.body.postId;
+    const filename = req.body.filename;
 
     deletePost(postId, (error, results) => {
         if (error) {
@@ -38,9 +40,15 @@ exports.deletePost = (req, res) => {
                 message: "Delete post failed"
             })
         }
+
+        let statusImage = fs.unlink(`images/${filename}`, () => {
+            return "Image supprimée";
+        })
+
         return res.status(200).json({
             success: 1,
             message: 'Delete post successfully',
+            image : statusImage
         }) 
     })
 }

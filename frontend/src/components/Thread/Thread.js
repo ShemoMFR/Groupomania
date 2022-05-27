@@ -60,8 +60,6 @@ function Thread(props) {
 
     async function handleClickLike(likes, postId, uuid) {
 
-        console.log(uuid)
-
         if (disableClick) {
 
             setDisableClick(false);
@@ -112,7 +110,9 @@ function Thread(props) {
         }   
     }
 
-    function hancleClickDelete(postId, userId) {
+    function hancleClickDelete(postId, userId, filename) {
+
+        console.log(filename)
 
         fetch('http://localhost:3000/api/posts/deletePost', {
             method: 'DELETE',
@@ -123,7 +123,8 @@ function Thread(props) {
             body: JSON.stringify({
                 postId: postId,
                 status: 1,
-                userId: userId
+                userId: userId,
+                filename: filename
             })
         })
         .then(res => res.json())
@@ -145,7 +146,7 @@ function Thread(props) {
                             </div>
                             {
                                 (userId[0] == post.idUser || userId[0] === 64 ) &&
-                                <span className='deletePost' onClick={() => hancleClickDelete(post.ID, post.idUser)}>X</span>
+                                <span className='deletePost' onClick={() => hancleClickDelete(post.ID, post.idUser, post.image)}>X</span>
                             }
                         </div>
                         <p className='threadMessage'>{post.message}</p>

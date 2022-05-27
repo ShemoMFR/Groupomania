@@ -26,6 +26,8 @@ exports.deletePost = (data, callback) => {
             if (error) {
                 return callback(error)
             }
+
+
             return callback(null, results)
         }
     )
